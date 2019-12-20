@@ -20,17 +20,6 @@ RSpec.describe "As a User" do
   end
 
 		it "I am directed to the new Password Form to complete my request" do
-			user = User.create(
-			  name:  Faker::Name.first_name,
-			  street_address: Faker::Address.street_address,
-			  city: Faker::Address.city,
-			  state: Faker::Address.state,
-			  zip: Faker::Address.zip,
-			  email: "user@gmail.com",
-			  password: "user",
-			  role: 0
-			)
-
 			visit '/profile'
 
 			expect(current_path).to eq('/profile')
@@ -48,10 +37,21 @@ RSpec.describe "As a User" do
 
 			expect(current_path).to eq('/profile')
 			expect(page).to have_content('Your Password has been updated!')
+			
+			click_on "Logout"
+
+			visit "/login"
+
+			fill_in :email, with: user.email
+			fill_in :password, with: 'user2'
+			
+			click_on "Sign In"
+
+			expect(current_path).to eq("/profile")
 		end
 
-		it "I am directed to the new Password Form to complete my request" do
-
+		it "I am redirected qrjkewghrkwegrkewghr the new Password Form to complete my request" do
+			visit '/profile'
 			click_on 'Edit Password'
 
 			expect(current_path).to eq("/profile/edit_password")

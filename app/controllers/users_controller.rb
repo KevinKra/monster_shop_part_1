@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
+		# binding.pry
     if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
@@ -32,9 +33,9 @@ class UsersController < ApplicationController
 	end
 
 	def update_password
-	  @user = User.create(password_params)
-	  if @user.password == @user.password_confirmation
-			@user.save
+		@user = User.find_by(id: current_user.id)
+		@user.update(password_params)
+	  if @user.save && @user.password == @user.password_confirmation
 			flash[:success] = "Your Password has been updated!"
 	    redirect_to "/profile"
 	  else
@@ -44,27 +45,24 @@ class UsersController < ApplicationController
 	end
 
 	private
+	def password_params
+		params.permit(:password, :password_confirmation)
+	end
 
- def password_params
-	 params.permit(:password, :password_confirmation)
- end
+	def user_params
+		params.permit(
+			:name,
+			:street_address,
+			:city,
+			:state,
+			:zip,
+			:email,
+			:password,
+			:password_confirmation
+		)
+	end
 
-
-	private
-		def user_params
-			params.permit(
-				:name,
-				:street_address,
-				:city,
-				:state,
-				:zip,
-				:email,
-				:password,
-				:password_confirmation
-			)
-		end
-
-		def require_user
-			redirect_to "/public/404" unless current_user
-		end
+	def require_user
+		redirect_to "/public/404" unless current_user
+	end
 end
