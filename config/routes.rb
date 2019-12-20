@@ -10,10 +10,6 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 
-	namespace :users do
-		get "/profile", to: 'profile#show'
-	end
-
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -48,8 +44,9 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
 	get "/users", to: 'users#index'
-	get "/register", to: 'users#new'
-	post "/register", to: 'users#create'
+  get "/register", to: 'users#new'
+  get "/profile", to: 'users#show'
+  post "/register", to: 'users#create'
 
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
