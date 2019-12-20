@@ -1,5 +1,6 @@
 <section class="user-dashboard">
   <h2>User Profile</h2>
+  <%= link_to "Edit Information", "/users/#{current_user.id}/edit" %>
   <h2><%=current_user.name%></h2>
   <p><%= current_user.street_address %></p>
   <p><%= current_user.city %></p>
