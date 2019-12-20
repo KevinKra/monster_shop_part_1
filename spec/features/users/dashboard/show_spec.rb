@@ -13,7 +13,7 @@ RSpec.describe "As a default user" do
 
   context 'when I visit my dashboard' do
     it 'it should display content relevant to my role' do
-      expect(page).to have_content("User Profile")
+      expect(page).to have_content("Hello,#{user.name}")
     end
   end
 
