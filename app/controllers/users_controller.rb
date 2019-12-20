@@ -15,15 +15,39 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-    if @user.save
+    if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
       redirect_to "/profile"
+		elsif !@user.save && @user.password == @user.password_confirmation
+			flash[:error] = @user.errors.full_messages.to_sentence
+      redirect_to "/register"
     else
       flash[:error] = @user.errors.full_messages.to_sentence
-      render :new
-    end
+			redirect_to '/register'
+		end
 	end
+
+	def edit_password
+	end
+
+	def update_password
+	  @user = User.create(password_params)
+	  if @user.password == @user.password_confirmation
+			@user.save
+			flash[:success] = "Your Password has been updated!"
+	    redirect_to "/profile"
+	  else
+			flash[:error] = "The Password you entered did not match, Please try again"
+	    redirect_to "/profile/edit_password"
+	  end
+	end
+
+	private
+
+ def password_params
+	 params.permit(:password, :password_confirmation)
+ end
 
 
 	private
@@ -35,7 +59,8 @@ class UsersController < ApplicationController
 				:state,
 				:zip,
 				:email,
-				:password
+				:password,
+				:password_confirmation
 			)
 		end
 
