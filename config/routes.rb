@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
 	get "/users", to: 'users#index'
 	get "/register", to: 'users#new'
+	get "/users/:id/edit", to: 'users#update'######## Made this one
 	# get "/users/profile", to: 'users#show'
 	post "/register", to: 'users#create'
 
