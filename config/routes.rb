@@ -10,10 +10,6 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 
-	namespace :users do
-		get "/profile", to: 'profile#show'
-	end
-
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -48,13 +44,11 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
 	get "/users", to: 'users#index'
-	get "/register", to: 'users#new'
-	get "/users/:id/edit", to: 'users#edit'######## Made this one
-	# patch "/users/:id", to: 'users#update'######## Made this one
-	# patch "/users/:id", as: :user, to: 'users#update'######## or add this one too
-	resources :users, only:[:update]
-	# get "/users/profile", to: 'users#show'
-	post "/register", to: 'users#create'
+  get "/register", to: 'users#new'
+  get "/profile", to: 'users#show'
+  post "/register", to: 'users#create'
+  get "/profile/edit_password", to: 'users#edit_password'
+  patch "/profile", to: 'users#update_password'
 
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'

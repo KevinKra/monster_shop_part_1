@@ -16,6 +16,7 @@ describe 'new user' do
 		zip = 80234
 		email = "ryan@fake.com"
 		password = "BestFakerEver"
+		password_confirmation = "BestFakerEver"
 
 		fill_in :name, with: name
 		fill_in :street_address, with: street_address
@@ -24,8 +25,10 @@ describe 'new user' do
 		fill_in :zip, with: zip
 		fill_in :email, with: email
 		fill_in :password, with: password
+		fill_in :password_confirmation, with: password_confirmation
 
 		click_on 'Create User'
+		expect(current_path).to eq('/profile')
 
 		within('.success-flash') do
 			expect(page).to have_content("Welcome, Ryan Allen")
@@ -44,12 +47,14 @@ describe 'new user' do
 		zip = 80234
 		email = "ryan@fake.com"
 		password = "BestFakerEver"
+		password_confirmation = "BestFakerEver"
 
 		fill_in :name, with: name
 		fill_in :street_address, with: street_address
 		fill_in :zip, with: zip
 		fill_in :email, with: email
 		fill_in :password, with: password
+		fill_in :password_confirmation, with: password_confirmation
 
 		click_on 'Create User'
 
@@ -61,7 +66,39 @@ describe 'new user' do
 		end
 	end
 
-	it 'I should not be ablt to register with an email that is already used' do
+	it 'I should not be able register if password and password confirmation do not match' do
+		visit '/'
+
+		click_link 'Register as a User'
+
+		name = "Ryan Allen"
+		street_address = "45433 fake st."
+		city = "Denver"
+		state = "Colorado"
+		zip = 80234
+		email = "ryan@fake.com"
+		password = "BestFakerEver"
+		password_confirmation = "BestFakerNever"
+
+		fill_in :name, with: name
+		fill_in :street_address, with: street_address
+		fill_in :zip, with: zip
+		fill_in :city, with: city
+		fill_in :state, with: state
+		fill_in :email, with: email
+		fill_in :password, with: password
+		fill_in :password_confirmation, with: password_confirmation
+
+		click_on 'Create User'
+
+		expect(current_path).to eq('/register')
+
+		within('.error-flash') do
+			expect(page).to have_content("Password confirmation doesn't match Password")
+		end
+	end
+
+	it 'I should not be able to register with an email that is already used' do
 		visit '/'
 
 		click_link 'Register as a User'
@@ -75,7 +112,8 @@ describe 'new user' do
 			state: "Colorado",
 			zip: 80234,
 			email: "ryan@fake.com",
-			password: "password1"
+			password: "password1",
+			password_confirmation: "password1"
 		)
 
 		name = "Ryan Allen"
@@ -85,6 +123,7 @@ describe 'new user' do
 		zip = 80234
 		email = "ryan@fake.com"
 		password = "BestFakerEver"
+		password_confirmation = "BestFakerEver"
 
 		fill_in :name, with: name
 		fill_in :street_address, with: street_address
@@ -93,6 +132,7 @@ describe 'new user' do
 		fill_in :zip, with: zip
 		fill_in :email, with: email
 		fill_in :password, with: password
+		fill_in :password_confirmation, with: password_confirmation
 
 		click_on 'Create User'
 

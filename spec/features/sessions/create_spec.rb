@@ -56,7 +56,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
       }
       it 'they can sign in' do
-        expect(current_path).to eq("/users/profile")
+        expect(current_path).to eq("/profile")
       end
 
       it 'they see a welcome flash message' do
@@ -128,7 +128,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
 
         visit "/login"
-        expect(current_path).to eq("/users/profile")
+        expect(current_path).to eq("/profile")
       end
 
     end
