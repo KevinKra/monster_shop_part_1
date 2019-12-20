@@ -1,5 +1,5 @@
 <section>
-  <%= form_tag 'users_profile', method: :patch do %>
+  <%= form_tag current_user, method: :patch do %>
 
     <%= label_tag :name %>
     <%= text_field_tag :name, current_user.name %>
