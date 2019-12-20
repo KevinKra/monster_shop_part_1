@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	before_action :require_user, only: [:show, :index]
 
   def index
 		@users = User.all
@@ -17,7 +18,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
-      redirect_to "/users/profile"
+      redirect_to "/profile"
     else
       flash[:error] = @user.errors.full_messages.to_sentence
       render :new
@@ -36,5 +37,9 @@ class UsersController < ApplicationController
 				:email,
 				:password
 			)
+		end
+
+		def require_user
+			redirect_to "/public/404" unless current_user
 		end
 end
