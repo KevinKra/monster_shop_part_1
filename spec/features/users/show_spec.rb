@@ -12,29 +12,12 @@ RSpec.describe "As a user when I visit my profile page" do
   }
 
   it "I see all of my profile's data except my password" do
-    
+
     expect(page).to have_content(user.name)
     expect(page).to have_content(user.street_address)
     expect(page).to have_content(user.city)
     expect(page).to have_content(user.state)
     expect(page).to have_content(user.zip)
     expect(page).to have_content(user.email)
-    expect(page).to have_content(user.role)
   end
 end
-
-# When I visit my profile page
-# Then I see all of my profile data on the page except my password
-# And I see a link to edit my profile data
-
-
-# user = User.create(
-#   name: "Chandler",
-#   street_address: "123 Five Street",
-#   city: "Denver",
-#   state: "CO",
-#   zip: "80210",
-#   email: "fake@gmail.com",
-#   password: "wordpass",
-#   role: 0
-# )
