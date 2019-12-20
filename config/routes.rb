@@ -43,8 +43,9 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
 
+	get "/register", to: 'users#new'
 	get "/users", to: 'users#index'
-  get "/register", to: 'users#new'
+	resources :users, only: [:edit, :update]
   get "/profile", to: 'users#show'
   post "/register", to: 'users#create'
   get "/profile/edit_password", to: 'users#edit_password'
