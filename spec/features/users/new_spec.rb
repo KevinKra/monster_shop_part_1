@@ -28,7 +28,6 @@ describe 'new user' do
 		fill_in :password_confirmation, with: password_confirmation
 
 		click_on 'Create User'
-
 		expect(current_path).to eq('/profile')
 
 		within('.success-flash') do
@@ -84,6 +83,8 @@ describe 'new user' do
 		fill_in :name, with: name
 		fill_in :street_address, with: street_address
 		fill_in :zip, with: zip
+		fill_in :city, with: city
+		fill_in :state, with: state
 		fill_in :email, with: email
 		fill_in :password, with: password
 		fill_in :password_confirmation, with: password_confirmation
