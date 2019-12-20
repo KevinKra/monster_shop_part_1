@@ -10,23 +10,27 @@
 
   <body>
     <nav class="topnav" id="top-nav">
+      <%= link_to "Home", "/" %>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
       <%= link_to "Cart: #{cart.total_items}", "/cart" unless current_admin? %>
-      <% if current_default? %>
-        <%= link_to "My Profile Page", "/users/profile" %>
+      <% if current_user %>
+        <%= link_to "My Profile", "/users/profile" %>
         <p> Logged in as <%= current_user.name %></p>
       <% end %>
       <% if current_admin? %>
         <%= link_to "Admin Dashboard", "/admin" %>
         <%= link_to "View All Users", "/admin/users" %>
       <% end %>
+      <% if current_merchant? %>
+        <%= link_to "Merchant Dashboard", "/merchants/dashboard" %>
+      <% end %>
       <section id="user-access">
         <% if current_user %>
           <%= link_to "Logout", "/logout" %>
         <% else %>
           <%= link_to "Register as a User", "/register" %>
-          <%= link_to "I already have an account", "/login" %>
+          <%= link_to "Login", "/login" %>
         <% end %>
       </section>
     </nav>
