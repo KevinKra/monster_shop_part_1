@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	before_action :require_user, only: [:show, :index]
 
   def index
 		@users = User.all
@@ -17,15 +18,36 @@ class UsersController < ApplicationController
     if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
-      redirect_to "/users/profile"
-    elsif !@user.save && @user.password == @user.password_confirmation
+      redirect_to "/profile"
+		elsif !@user.save && @user.password == @user.password_confirmation
+			flash[:error] = @user.errors.full_messages.to_sentence
+      redirect_to "/register"
+    else
       flash[:error] = @user.errors.full_messages.to_sentence
-      redirect_to '/register'
-		else 
-			flash[:error] = "The password and password confirmation to not match"
 			redirect_to '/register'
-    end
+		end
 	end
+
+	def edit_password
+	end
+
+	def update_password
+	  @user = User.create(password_params)
+	  if @user.password == @user.password_confirmation
+			@user.save
+			flash[:success] = "Your Password has been updated!"
+	    redirect_to "/profile"
+	  else
+			flash[:error] = "The Password you entered did not match, Please try again"
+	    redirect_to "/profile/edit_password"
+	  end
+	end
+
+	private
+
+ def password_params
+	 params.permit(:password, :password_confirmation)
+ end
 
 
 	private
@@ -40,5 +62,9 @@ class UsersController < ApplicationController
 				:password,
 				:password_confirmation
 			)
+		end
+
+		def require_user
+			redirect_to "/public/404" unless current_user
 		end
 end

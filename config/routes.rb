@@ -10,12 +10,6 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 
-	namespace :users do
-		get "/profile", to: 'profile#show'
-		get "/profile/edit_password", to: 'profile#edit_password'
-		patch "/profile", to: 'profile#update_password'
-	end
-
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -50,8 +44,11 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
 	get "/users", to: 'users#index'
-	get "/register", to: 'users#new'
-	post "/register", to: 'users#create'
+  get "/register", to: 'users#new'
+  get "/profile", to: 'users#show'
+  post "/register", to: 'users#create'
+  get "/profile/edit_password", to: 'users#edit_password'
+  patch "/profile", to: 'users#update_password'
 
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'

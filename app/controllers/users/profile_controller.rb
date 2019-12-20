@@ -12,10 +12,10 @@ class Users::ProfileController < Users::BaseController
 	  if @user.password == @user.password_confirmation
 			@user.save
 			flash[:success] = "Your Password has been updated!"
-	    redirect_to "/users/profile"
+	    redirect_to "/profile"
 	  else
 			flash[:error] = "The Password you entered did not match, Please try again"
-	    redirect_to "/users/profile/edit_password"
+	    redirect_to "/profile/edit_password"
 	  end
 	end
 

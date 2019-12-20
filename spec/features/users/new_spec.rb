@@ -29,6 +29,8 @@ describe 'new user' do
 
 		click_on 'Create User'
 
+		expect(current_path).to eq('/profile')
+
 		within('.success-flash') do
 			expect(page).to have_content("Welcome, Ryan Allen")
 		end
@@ -91,7 +93,7 @@ describe 'new user' do
 		expect(current_path).to eq('/register')
 
 		within('.error-flash') do
-			expect(page).to have_content("The password and password confirmation to not match")
+			expect(page).to have_content("Password confirmation doesn't match Password")
 		end
 	end
 

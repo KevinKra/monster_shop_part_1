@@ -14,7 +14,7 @@ RSpec.describe "As a User" do
 
   context 'when I visit my dashboard' do
     it 'it should display content relevant to my role' do
-      expect(page).to have_content("User Profile")
+      expect(page).to have_content("My Profile")
 			expect(page).to have_button("Edit Password")
     end
   end
@@ -31,13 +31,13 @@ RSpec.describe "As a User" do
 			  role: 0
 			)
 
-			visit '/users/profile'
+			visit '/profile'
 
-			expect(current_path).to eq('/users/profile')
+			expect(current_path).to eq('/profile')
 
 			click_on 'Edit Password'
 
-			expect(current_path).to eq("/users/profile/edit_password")
+			expect(current_path).to eq("/profile/edit_password")
 			expect(page).to have_content("Password")
 			expect(page).to have_content("Password confirmation")
 
@@ -46,7 +46,7 @@ RSpec.describe "As a User" do
 
 			click_button "Change Password"
 
-			expect(current_path).to eq('/users/profile')
+			expect(current_path).to eq('/profile')
 			expect(page).to have_content('Your Password has been updated!')
 		end
 
@@ -54,7 +54,7 @@ RSpec.describe "As a User" do
 
 			click_on 'Edit Password'
 
-			expect(current_path).to eq("/users/profile/edit_password")
+			expect(current_path).to eq("/profile/edit_password")
 			expect(page).to have_content("Password")
 			expect(page).to have_content("Password confirmation")
 
@@ -63,7 +63,7 @@ RSpec.describe "As a User" do
 
 			click_button "Change Password"
 
-			expect(current_path).to eq('/users/profile/edit_password')
+			expect(current_path).to eq('/profile/edit_password')
 			expect(page).to have_content('The Password you entered did not match, Please try again')
 		end
 	end

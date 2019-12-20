@@ -11,7 +11,7 @@ RSpec.describe 'User logging out', type: :feature do
     click_on "Sign In"
   }
   it "they are logged in" do
-    expect(current_path).to eq("/users/profile")
+    expect(current_path).to eq("/profile")
   end
   
   context 'they are currently logged in' do
@@ -29,7 +29,7 @@ RSpec.describe 'User logging out', type: :feature do
 
       within "#top-nav" do
         expect(page).to have_content("Register as a User")
-        expect(page).to have_content("I already have an account")
+        expect(page).to have_content("Login")
       end
     end
 
