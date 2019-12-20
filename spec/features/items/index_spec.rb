@@ -19,16 +19,16 @@ RSpec.describe "Items Index Page" do
       @tire_7 = @meg.items.create!(name: "Gatorskins-7", description: "I am number 7", price: 700, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 18)
       @tire_8 = @meg.items.create!(name: "Gatorskins-8", description: "I am number 8", price: 800, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 19)
       @tire_9 = @meg.items.create!(name: "Gatorskins-9", description: "I am number 9", price: 900, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 20)
-      @tire_10 = @meg.items.create!(name: "Gatorskins-9", description: "I am number 9", price: 900, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 21)
+      @tire_10 = @meg.items.create!(name: "Gatorskins-10", description: "I am number 9", price: 900, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 21)
 
 
       @pull_toy = @brian.items.create!(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create!(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
       ItemOrder.create!(order_id: @order.id, item_id: @tire.id, price: 100, quantity: 10)
-      ItemOrder.create!(order_id: @order_2.id, item_id: @tire_2.id, price: 100, quantity: 9)
+      ItemOrder.create!(order_id: @order_2.id, item_id: @tire_2.id, price: 100, quantity: 7)
       ItemOrder.create!(order_id: @order.id, item_id: @tire_3.id, price: 100, quantity: 8)
-      ItemOrder.create!(order_id: @order_2.id, item_id: @tire_4.id, price: 100, quantity: 7)
+      ItemOrder.create!(order_id: @order_2.id, item_id: @tire_4.id, price: 100, quantity: 9)
       ItemOrder.create!(order_id: @order.id, item_id: @tire_5.id, price: 100, quantity: 6)
       ItemOrder.create!(order_id: @order_2.id, item_id: @tire_6.id, price: 100, quantity: 5)
       ItemOrder.create!(order_id: @order.id, item_id: @tire_7.id, price: 100, quantity: 4)
@@ -83,26 +83,21 @@ RSpec.describe "Items Index Page" do
 
         # top 5 category
         within "#top-5-items" do
-          expect(page).to have_content("#{@tire.name}, quantity bought: 10")
-          expect(page).to have_content("#{@tire_2.name}, quantity bought: 9")
-          expect(page).to have_content("#{@tire_3.name}, quantity bought: 8")
-          expect(page).to have_content("#{@tire_4.name}, quantity bought: 7")
-          expect(page).to have_content("#{@tire_5.name}, quantity bought: 6")
+          expect(page).to have_content("1. #{@tire.name}, quantity bought: 10")
+          expect(page).to have_content("2. #{@tire_4.name}, quantity bought: 9")
+          expect(page).to have_content("3. #{@tire_3.name}, quantity bought: 8")
+          expect(page).to have_content("4. #{@tire_2.name}, quantity bought: 7")
+          expect(page).to have_content("5. #{@tire_5.name}, quantity bought: 6")
         end
 
         # bottom 5 category
-        # within "#bottom-5-items" do
-        #   expect(page).to have_content(@tire_6.name)
-        #   expect(page).to have_content(@tire_7.name)
-        #   expect(page).to have_content(@tire_8.name)
-        #   expect(page).to have_content(@tire_9.name)
-        #   expect(page).to have_content(@tire_10.name)
-        #   expect(page).to have_content(@tire_6.quantity_bought)
-        #   expect(page).to have_content(@tire_7.quantity_bought)
-        #   expect(page).to have_content(@tire_8.quantity_bought)
-        #   expect(page).to have_content(@tire_9.quantity_bought)
-        #   expect(page).to have_content(@tire_10.quantity_bought)
-        # end
+        within "#bottom-5-items" do
+          expect(page).to have_content("1. #{@tire_10.name}, quantity bought: 1")
+          expect(page).to have_content("2. #{@tire_9.name}, quantity bought: 2")
+          expect(page).to have_content("3. #{@tire_8.name}, quantity bought: 3")
+          expect(page).to have_content("4. #{@tire_7.name}, quantity bought: 4")
+          expect(page).to have_content("5. #{@tire_6.name}, quantity bought: 5")
+        end
       end
 
       it "As a visitor, I can see a list of all of the items " do
