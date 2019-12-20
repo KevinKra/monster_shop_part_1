@@ -12,7 +12,7 @@ RSpec.describe "As a user when I visit my profile page" do
   }
 
   it "I see all of my profile's data except my password" do
-    
+
     expect(page).to have_content(user.name)
     expect(page).to have_content(user.street_address)
     expect(page).to have_content(user.city)
@@ -21,20 +21,24 @@ RSpec.describe "As a user when I visit my profile page" do
     expect(page).to have_content(user.email)
     expect(page).to have_content(user.role)
   end
+
+  it "I see a link to edit my profile data" do
+
+    click_on "Edit Information"
+
+    expect(current_path).to eq("/users/#{user.id}/edit")
+    expect(page).to have_content("Submit Changes")
+  end
 end
 
+# As a registered user
 # When I visit my profile page
-# Then I see all of my profile data on the page except my password
-# And I see a link to edit my profile data
-
-
-# user = User.create(
-#   name: "Chandler",
-#   street_address: "123 Five Street",
-#   city: "Denver",
-#   state: "CO",
-#   zip: "80210",
-#   email: "fake@gmail.com",
-#   password: "wordpass",
-#   role: 0
-# )
+# I see a link to edit my profile data
+# When I click on the link to edit my profile data
+# I see a form like the registration page
+# The form is prepopulated with all my current information except my password
+# When I change any or all of that information
+# And I submit the form
+# Then I am returned to my profile page
+# And I see a flash message telling me that my data is updated
+# And I see my updated information
