@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   end
 
 	def show
-		@user = User.find(session[:user_id])
+    # require "pry"; binding.pry
+		# @user = User.find(session[:user_id])  #### I moved this to the profile user show
 	end
 
   def new
@@ -13,10 +14,12 @@ class UsersController < ApplicationController
 	end
 
   def update
+    # require "pry"; binding.pry
     @user = User.find(params[:id])
     @user.update(user_params)
     if @user.save
-      redirect_to "users_profile"
+      redirect_to "/users/profile"
+      flash[:success] = "Updates saved!"
     else
       flash[:error] = @user.errors.full_messages.to_sentence
       render :edit
@@ -35,6 +38,9 @@ class UsersController < ApplicationController
     end
 	end
 
+  def edit
+    @user = User.find(session[:user_id])
+  end
 
 	private
 		def user_params
