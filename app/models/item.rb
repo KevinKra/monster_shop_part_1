@@ -25,4 +25,27 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.all_active
+    Item.where(active?: :true)
+  end
+
+  def self.top_five_bought
+    joins(:item_orders)
+    .select('items.* sum, sum(item_orders.quantity) as quantity')
+    .group(:id)
+    .order('quantity desc')
+    .limit(5).to_a
+  end
+
+  def self.bottom_five_bought
+    joins(:item_orders)
+    .select('items.* sum, sum(item_orders.quantity) as quantity')
+    .group(:id)
+    .order('quantity')
+    .limit(5).to_a
+  end
+
+  def quantity_bought
+    ItemOrder.where(item_id: self.id).sum(:quantity)
+  end
 end
