@@ -4,12 +4,24 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+<section id = "top-5-items">
+  <h2>Top 5 Bought Items</h2>
+  <% @items.top_five_bought.each.with_index do |item, index| %>
+    <p><%= index + 1 %>. <%= item.name %>, quantity bought: <%= item.quantity_bought %></p>
+  <% end %>
+</section>
+<section id = "bottom-5-items">
+  <h2>Bottom 5 Bought Items</h2>
+  <% @items.bottom_five_bought.each.with_index do |item, index| %>
+    <p><%= index + 1 %>. <%= item.name %>, quantity bought: <%= item.quantity_bought %></p>
+  <% end %>
+</section>
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <img src= <%= item.image %>>
+      <%= link_to image_tag(item.image), "/items/#{item.id}", :id => "image-link-#{item.id}" %>
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
