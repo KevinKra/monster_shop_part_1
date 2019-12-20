@@ -14,7 +14,7 @@ class Users::ProfileController < Users::BaseController
 			flash[:success] = "Your Password has been updated!"
 	    redirect_to "/users/profile"
 	  else
-			flash[:error] = "What you entered did not match, Please try again"
+			flash[:error] = "The Password you entered did not match, Please try again"
 	    redirect_to "/users/profile/edit_password"
 	  end
 	end

@@ -64,6 +64,6 @@ RSpec.describe "As a User" do
 			click_button "Change Password"
 
 			expect(current_path).to eq('/users/profile/edit_password')
-			expect(page).to have_content('What you entered did not match, Please try again')
+			expect(page).to have_content('The Password you entered did not match, Please try again')
 		end
 	end

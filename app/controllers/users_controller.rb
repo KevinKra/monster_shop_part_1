@@ -14,13 +14,16 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-    if @user.save
+    if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
       redirect_to "/users/profile"
-    else
+    elsif !@user.save && @user.password == @user.password_confirmation
       flash[:error] = @user.errors.full_messages.to_sentence
-      render :new
+      redirect_to '/register'
+		else 
+			flash[:error] = "The password and password confirmation to not match"
+			redirect_to '/register'
     end
 	end
 
@@ -34,7 +37,8 @@ class UsersController < ApplicationController
 				:state,
 				:zip,
 				:email,
-				:password
+				:password,
+				:password_confirmation
 			)
 		end
 end
