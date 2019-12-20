@@ -62,29 +62,29 @@ RSpec.describe "Items Index Page" do
         visit '/items'
       end
 
-      # xit "As a user, I can see a list of all of the items "do
-      #   visit "/login"
-      #   fill_in :email, with: user.email
-      #   fill_in :password, with: user.password
-      #   click_on "Sign In"
-      #   visit '/items'
-      # end
-      #
-      # xit "As an admin, I can see a list of all of the items "do
-      #   visit "/login"
-      #   fill_in :email, with: admin.email
-      #   fill_in :password, with: admin.password
-      #   click_on "Sign In"
-      #   visit '/items'
-      # end
-      #
-      # xit "As a merchant, I can see a list of all of the items "do
-      #   visit "/login"
-      #   fill_in :email, with: merchant.email
-      #   fill_in :password, with: merchant.password
-      #   click_on "Sign In"
-      #   visit '/items'
-      # end
+      it "As a user, I can see a list of all of the items "do
+        visit "/login"
+        fill_in :email, with: user.email
+        fill_in :password, with: user.password
+        click_on "Sign In"
+        visit '/items'
+      end
+
+      it "As an admin, I can see a list of all of the items "do
+        visit "/login"
+        fill_in :email, with: admin.email
+        fill_in :password, with: admin.password
+        click_on "Sign In"
+        visit '/items'
+      end
+
+      it "As a merchant, I can see a list of all of the items "do
+        visit "/login"
+        fill_in :email, with: merchant.email
+        fill_in :password, with: merchant.password
+        click_on "Sign In"
+        visit '/items'
+      end
     end
   end
 end
