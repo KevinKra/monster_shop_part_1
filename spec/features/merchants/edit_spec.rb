@@ -21,6 +21,8 @@ RSpec.describe "As a Visitor" do
       visit "/merchants/#{@bike_shop.id}"
       click_on "Update Merchant"
 
+      expect(current_path).to eq("/merchants/#{@bike_shop.id}/edit")
+
       fill_in 'Name', with: "Brian's Super Cool Bike Shop"
       fill_in 'Address', with: "1234 New Bike Rd."
       fill_in 'City', with: "Denver"
@@ -32,6 +34,8 @@ RSpec.describe "As a Visitor" do
       expect(current_path).to eq("/merchants/#{@bike_shop.id}")
       expect(page).to have_content("Brian's Super Cool Bike Shop")
       expect(page).to have_content("1234 New Bike Rd.\nDenver, CO 80204")
+      expect(page).not_to have_content("Richmond")
+      expect(page).not_to have_content("VA")
     end
 
     it 'I see a flash message if i dont fully complete form' do
