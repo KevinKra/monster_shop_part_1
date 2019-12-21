@@ -14,6 +14,7 @@ RSpec.describe "As a merchant user" do
   context 'when I visit my dashboard' do
     it 'it should display content relevant to my role' do
       expect(page).to have_content("Merchant Dashboard")
+      expect(page).not_to have_content("Welcome index")
     end
   end
 
