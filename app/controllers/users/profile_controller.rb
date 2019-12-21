@@ -8,9 +8,9 @@ class Users::ProfileController < Users::BaseController
 	end
 
 	def update_password
-	  @user = User.create(password_params)
-	  if @user.password == @user.password_confirmation
-			@user.save
+	  user = User.create(password_params)
+	  if user.password == user.password_confirmation
+			user.save
 			flash[:success] = "Your Password has been updated!"
 	    redirect_to "/profile"
 	  else
@@ -24,4 +24,9 @@ class Users::ProfileController < Users::BaseController
  def password_params
 	 params.permit(:password, :password_confirmation)
  end
+
+
+  def user
+    @user = User.create(password_params)
+  end
 end
