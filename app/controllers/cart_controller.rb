@@ -26,10 +26,20 @@ class CartController < ApplicationController
     item = Item.find(params[:item_id])
     if params[:quantity] == "add" && item.inventory > session[:cart][params[:item_id]]
       session[:cart][params[:item_id]] += 1
-    else
+      redirect_to '/cart'
+    elsif params[:quantity] == "add"
       flash[:error] = "Out of stock"
+      redirect_to '/cart'
+    elsif params[:quantity] == "subtract" && session[:cart][params[:item_id]] > 1
+      session[:cart][params[:item_id]] -= 1
+      redirect_to '/cart'
+    elsif params[:quantity] == "subtract" && session[:cart][params[:item_id]] == 1
+      flash[:notice] = "Item has been removed from the cart"
+      remove_item
+    else
+      flash[:error] == "Something went wrong, try again."
+      redirect_to '/cart'
     end
-    redirect_to '/cart'
   end
 
   private
