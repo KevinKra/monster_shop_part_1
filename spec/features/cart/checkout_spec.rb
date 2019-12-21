@@ -22,6 +22,7 @@ RSpec.describe 'Cart show' do
       visit "/cart"
 
       expect(page).to have_link("Checkout")
+      expect(page).to have_content("Cart: 3")
 
       click_on "Checkout"
 
@@ -34,6 +35,7 @@ RSpec.describe 'Cart show' do
       visit "/cart"
 
       expect(page).to_not have_link("Checkout")
+      expect(page).to have_content("Cart: 0")
     end
   end
 end
