@@ -23,6 +23,7 @@ RSpec.describe 'Cart creation' do
 
       within 'nav' do
         expect(page).to have_content("Cart: 1")
+        expect(page).not_to have_content("Cart: 0")
       end
 
       visit "/items/#{@pencil.id}"
@@ -30,6 +31,7 @@ RSpec.describe 'Cart creation' do
 
       within 'nav' do
         expect(page).to have_content("Cart: 2")
+        expect(page).not_to have_content("Cart: 1")
       end
     end
   end
