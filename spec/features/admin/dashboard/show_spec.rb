@@ -16,5 +16,4 @@ RSpec.describe "As an admin user" do
       expect(page).to have_content("Admin Dashboard")
     end
   end
-
 end
