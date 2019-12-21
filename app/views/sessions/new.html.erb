@@ -1,7 +1,1 @@
-<%= form_tag '/login', method: :post do %>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-  <%= submit_tag "Sign In" %>
-<% end %>
+<%= render partial: 'form', locals: {path: '/login', method: :post, button_text: 'Sign In'} %>
