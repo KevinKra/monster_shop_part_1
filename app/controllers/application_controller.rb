@@ -8,11 +8,6 @@ class ApplicationController < ActionController::Base
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
   end
 
-  def current_user
-    return false unless session[:user_id]
-    @current_user ||= User.find(session[:user_id])
-	end
-
   def current_admin?
     current_user && current_user.admin?
   end
@@ -24,4 +19,12 @@ class ApplicationController < ActionController::Base
   def current_default?
     current_user && current_user.default?
   end
+
+  private
+
+  def current_user
+    return false unless session[:user_id]
+    @current_user ||= User.find(session[:user_id])
+  end
+
 end
