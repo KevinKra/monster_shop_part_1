@@ -48,15 +48,15 @@ class ItemsController<ApplicationController
 
   private
 
-  def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
-  end
+    def item_params
+      params.permit(:name,:description,:price,:inventory,:image)
+    end
 
-  def merchant
-    @merchant = Merchant.find(params[:merchant_id])
-  end
+    def merchant
+      @merchant = Merchant.find(params[:merchant_id])
+    end
 
-  def item
-    @item = Item.find(params[:id])
-  end
+    def item
+      @item = Item.find(params[:id])
+    end
 end

@@ -42,12 +42,12 @@ class MerchantsController <ApplicationController
 
   private
 
-  def merchant_params
-    params.permit(:name,:address,:city,:state,:zip)
-  end
+    def merchant_params
+      params.permit(:name,:address,:city,:state,:zip)
+    end
 
-  def merchant
-    @merchant = Merchant.find(params[:id])
-  end
+    def merchant
+      @merchant = Merchant.find(params[:id])
+    end
 
 end

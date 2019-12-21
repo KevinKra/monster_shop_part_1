@@ -48,11 +48,11 @@ class ReviewsController<ApplicationController
 
   private
 
-  def item
-    @item = Item.find(params[:item_id])
-  end
+    def item
+      @item = Item.find(params[:item_id])
+    end
 
-  def review
-    @review = Review.find(params[:id])
-  end
+    def review
+      @review = Review.find(params[:id])
+    end
 end

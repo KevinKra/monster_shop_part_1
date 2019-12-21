@@ -21,10 +21,9 @@ class Users::ProfileController < Users::BaseController
 
 	private
 
- def password_params
-	 params.permit(:password, :password_confirmation)
- end
-
+   def password_params
+  	 params.permit(:password, :password_confirmation)
+   end
 
   def user
     @user = User.create(password_params)
