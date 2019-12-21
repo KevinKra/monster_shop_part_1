@@ -16,10 +16,50 @@ RSpec.describe 'Cart show' do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
       @items_in_cart = [@paper,@tire,@pencil]
+
+      visit "/cart"
+    end
+
+    it 'Next to each item in my cart, I see a button to increment the count of items I want to purchase' do
+      # I cannot increment the count beyond the item's inventory size
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to have_link('+')
+      end
+      within "#cart-item-#{@pencil.id}" do
+        expect(page).to have_link('+')
+      end
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      expect(current_path).to eq('/cart')
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("2")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("3")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      expect(current_path).to eq('/cart')
+      within ".error-flash" do
+        expect(page).to have_content("Out of stock")
+      end
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("3")
+      end
     end
 
     it 'Theres a link to checkout' do
-      visit "/cart"
 
       expect(page).to have_link("Checkout")
 
