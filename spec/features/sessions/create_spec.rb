@@ -17,6 +17,7 @@ RSpec.describe 'User logging in' do
       }
       it 'they can sign in' do
         expect(current_path).to eq("/admin/dashboard")
+        expect(page).not_to have_content("Welcome index")
       end
 
       it 'they see a welcome flash message' do
@@ -57,6 +58,8 @@ RSpec.describe 'User logging in' do
       }
       it 'they can sign in' do
         expect(current_path).to eq("/profile")
+        expect(page).to have_content("Cart: 0")
+
       end
 
       it 'they see a welcome flash message' do
