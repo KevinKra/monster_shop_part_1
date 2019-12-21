@@ -6,17 +6,15 @@ class UsersController < ApplicationController
   end
 
 	def show
-		@user = User.find(session[:user_id])
+		user
 	end
 
   def new
-    @user = User.new(user_params)
+    new_user
 	end
 
 	def create
-		@user = User.new(user_params)
-		# binding.pry
-    if @user.save && @user.password == @user.password_confirmation
+    if new_user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
       redirect_to "/profile"
@@ -30,8 +28,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
-		@user = User.find(session[:user_id])
-		@user.update(user_params)
+		user.update(user_params)
 		if @user.save
 			redirect_to "/profile"
 			flash[:success] = "Updates saved!"
@@ -57,24 +54,32 @@ class UsersController < ApplicationController
 	end
 
 	private
-	def password_params
-		params.permit(:password, :password_confirmation)
-	end
+		def password_params
+			params.permit(:password, :password_confirmation)
+		end
 
-	def user_params
-		params.permit(
-			:name,
-			:street_address,
-			:city,
-			:state,
-			:zip,
-			:email,
-			:password,
-			:password_confirmation
-		)
-	end
+		def user_params
+			params.permit(
+				:name,
+				:street_address,
+				:city,
+				:state,
+				:zip,
+				:email,
+				:password,
+				:password_confirmation
+			)
+		end
 
-	def require_user
-		redirect_to "/public/404" unless current_user
-	end
+		def require_user
+			redirect_to "/public/404" unless current_user
+		end
+
+		def user
+			@user = User.find(session[:user_id])
+		end
+
+		def new_user
+			@user = User.new(user_params)
+		end
 end
