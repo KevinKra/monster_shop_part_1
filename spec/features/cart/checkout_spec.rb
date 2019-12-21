@@ -20,8 +20,6 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Next to each item in my cart, I see a buttons to increment the count' do
-      expect(current_path).to eq('/cart')
-      # I cannot increment the count beyond the item's inventory size
       within "#cart-item-#{@tire.id}" do
         expect(page).to have_link('+')
         expect(page).to have_link('-')
@@ -67,6 +65,42 @@ RSpec.describe 'Cart show' do
       within ".error-flash" do
         expect(page).to have_content("Out of stock")
       end
+    end
+
+    it 'I can increment the item to deletion' do
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("1")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("2")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '-'
+      end
+
+      expect(current_path).to eq('/cart')
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("1")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '-'
+      end
+
+      expect(current_path).to eq('/cart')
+
+      within ".notice-flash" do
+        expect(page).to have_content("Item has been removed from the cart")
+      end
+
+      expect(page).not_to have_css("cart-item-#{@paper.id}")
     end
 
     it 'Theres a link to checkout' do
