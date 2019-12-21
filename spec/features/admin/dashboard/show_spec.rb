@@ -14,6 +14,7 @@ RSpec.describe "As an admin user" do
   context 'when I visit my dashboard' do
     it 'it should display content relevant to my role' do
       expect(page).to have_content("Admin Dashboard")
+      expect(page).not_to have_content("Welcome index")
     end
   end
 end
