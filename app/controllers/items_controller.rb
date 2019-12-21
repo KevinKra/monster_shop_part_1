@@ -2,26 +2,24 @@ class ItemsController<ApplicationController
 
   def index
     if params[:merchant_id]
-      @merchant = Merchant.find(params[:merchant_id])
-      @items = @merchant.items
+      @items = merchant.items
     else
       @items = Item.all_active
     end
   end
 
   def show
-    @item = Item.find(params[:id])
+    item
   end
 
   def new
-    @merchant = Merchant.find(params[:merchant_id])
+    merchant
   end
 
   def create
-    @merchant = Merchant.find(params[:merchant_id])
-    item = @merchant.items.create(item_params)
+    item = merchant.items.create(item_params)
     if item.save
-      redirect_to "/merchants/#{@merchant.id}/items"
+      redirect_to "/merchants/#{merchant.id}/items"
     else
       flash[:error] = item.errors.full_messages.to_sentence
       render :new
@@ -29,14 +27,13 @@ class ItemsController<ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    item
   end
 
   def update
-    @item = Item.find(params[:id])
-    @item.update(item_params)
+    item.update(item_params)
     if @item.save
-      redirect_to "/items/#{@item.id}"
+      redirect_to "/items/#{item.id}"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :edit
@@ -44,7 +41,6 @@ class ItemsController<ApplicationController
   end
 
   def destroy
-    item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
     item.destroy
     redirect_to "/items"
@@ -54,5 +50,13 @@ class ItemsController<ApplicationController
 
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
+  end
+
+  def merchant
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def item
+    @item = Item.find(params[:id])
   end
 end
