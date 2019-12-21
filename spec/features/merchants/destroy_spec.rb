@@ -45,6 +45,9 @@ RSpec.describe "As a visitor" do
       visit "/items/#{pencil.id}"
       click_on "Add To Cart"
 
+      expect(page).to have_content("Cart: 4")
+      expect(page).not_to have_content("Cart: 0")
+
       visit "/cart"
       click_on "Checkout"
 
@@ -64,9 +67,8 @@ RSpec.describe "As a visitor" do
 
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
-
-      # visit "/merchants/#{brian.id}"
-      # expect(page).to have_link("Delete Merchant")
+      visit "/merchants/#{brian.id}"
+      expect(page).to have_link("Delete Merchant")
     end
   end
 end
