@@ -10,12 +10,8 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 	resources :merchants   #installed by Alex on Saturday 12/21
-	
+
 	resources :items #installed by Alex on Saturday 12/21
-  # get "/items", to: "items#index"
-  # get "/items/:id", to: "items#show"
-  # get "/items/:id/edit", to: "items#edit"
-  # patch "/items/:id", to: "items#update"
 
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
