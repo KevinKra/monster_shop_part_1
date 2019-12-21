@@ -9,19 +9,14 @@ Rails.application.routes.draw do
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
 	end
+	resources :merchants   #installed by Alex on Saturday 12/21
+	
+	resources :items #installed by Alex on Saturday 12/21
+  # get "/items", to: "items#index"
+  # get "/items/:id", to: "items#show"
+  # get "/items/:id/edit", to: "items#edit"
+  # patch "/items/:id", to: "items#update"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
-
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
@@ -51,12 +46,13 @@ Rails.application.routes.draw do
   get "/profile/edit_password", to: 'users#edit_password'
   patch "/profile", to: 'users#update_password'
 
+
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
 
   get '/welcome/home', to: 'welcome#index'
-	# via: :all includes all Restful verbs
-	match '*path' => 'errors#show', via: :all
+	match '*path' => 'errors#show', via: :all    	# via: :all includes all Restful verbs
+
 end
