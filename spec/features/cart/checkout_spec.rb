@@ -103,14 +103,13 @@ RSpec.describe 'Cart show' do
       expect(page).not_to have_css("cart-item-#{@paper.id}")
     end
 
-    it 'Theres a link to checkout' do
-
-      expect(page).to have_link("Checkout")
-
-      click_on "Checkout"
-
-      expect(current_path).to eq("/orders/new")
+    it 'I have items in my cart, I see information telling me I must register or log in to finish checking out' do
+      within ".warning-flash" do
+        expect(page).to have_content("Warning: You must register or log in to finish the checkout process")
+      end
     end
+
+    # another test that the checkout is there if a user is logged in
   end
 
   describe 'When I havent added items to my cart' do
