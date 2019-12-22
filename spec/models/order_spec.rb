@@ -14,6 +14,12 @@ describe Order, type: :model do
     it {should have_many(:items).through(:item_orders)}
   end
 
+  describe 'current_status' do
+    it "is created as pending" do
+      order = Order.create
+      expect(order.current_status).to eq("pending")
+    end
+  end
   # describe 'instance methods' do
   #   before :each do
   #     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)

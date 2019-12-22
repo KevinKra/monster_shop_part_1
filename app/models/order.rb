@@ -4,7 +4,7 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
-  enum order_status: ["pending"]
+  enum current_status: ["pending"]
   # def grandtotal
   #   item_orders.sum('price * quantity')
   # end
