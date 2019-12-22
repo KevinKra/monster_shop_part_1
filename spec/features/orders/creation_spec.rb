@@ -34,9 +34,9 @@ RSpec.describe "As a registered user, When I add items to my cart" do
       expect(current_path).to eq("/profile/orders")
 
       expect(Order.count).to eq(1)
-      expect(page).to have_css("#order-section-#{Order.last.id}")
+      expect(page).to have_css("#section-order-#{Order.last.id}")
 
-      within "#notice-flash" do
+      within ".notice-flash" do
         expect(page).to have_content("Your order has been created.")
       end
     end

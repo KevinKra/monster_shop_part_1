@@ -37,7 +37,7 @@ RSpec.describe "As a registered user" do
   it "I can see all my orders on my Profile orders page" do
     expect(Order.count).to eq(2)
 
-    within "#section-order-1" do
+    within "#section-order-#{@order_1.id}" do
       expect(page).to have_content(@order_1.id)
       expect(page).to have_content(@order_1.created_at)
       expect(page).to have_content(@order_1.updated_at)
@@ -46,7 +46,7 @@ RSpec.describe "As a registered user" do
       expect(page).to have_content(@order_1.grand_total)
     end
 
-    within "#section-order-2" do
+    within "#section-order-#{@order_2.id}" do
       expect(page).to have_content(@order_2.id)
       expect(page).to have_content(@order_2.created_at)
       expect(page).to have_content(@order_2.updated_at)
