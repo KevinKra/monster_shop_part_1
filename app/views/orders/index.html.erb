@@ -2,11 +2,11 @@
 
 <% @orders.each do |order| %>
 <section id ="section-order-<%=order.id%>">
-  <p><%=  order.id %></p>
-  <p><%=  order.created_at %></p>
-  <p><%=  order.updated_at %></p>
-  <p><%=  order.current_status %></p>
-  <p><%=  order.total_quantity %></p>
-  <p><%=  order.grand_total %></p>
+  <p>Order id: <%=  order.id %></p>
+  <p>Order Created: <%=  order.created_at %></p>
+  <p>Order Updated: <%=  order.updated_at %></p>
+  <p>Order Current Status: <%=  order.current_status %></p>
+  <p>Order Total Quantity: <%=  order.total_quantity %></p>
+  <p>Order Grand Total: <%=  order.grand_total %></p>
 </section>
 <% end %>

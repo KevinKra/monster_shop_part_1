@@ -38,21 +38,21 @@ RSpec.describe "As a registered user" do
     expect(Order.count).to eq(2)
 
     within "#section-order-#{@order_1.id}" do
-      expect(page).to have_content(@order_1.id)
-      expect(page).to have_content(@order_1.created_at)
-      expect(page).to have_content(@order_1.updated_at)
-      expect(page).to have_content(@order_1.current_status)
-      expect(page).to have_content(@order_1.total_quantity)
-      expect(page).to have_content(@order_1.grand_total)
+      expect(page).to have_content("Order id: #{@order_1.id}")
+      expect(page).to have_content("Order Created: #{@order_1.created_at}")
+      expect(page).to have_content("Order Updated: #{@order_1.updated_at}")
+      expect(page).to have_content("Order Current Status: #{@order_1.current_status}")
+      expect(page).to have_content("Order Total Quantity: #{@order_1.total_quantity}")
+      expect(page).to have_content("Order Grand Total: #{@order_1.grand_total}")
     end
 
     within "#section-order-#{@order_2.id}" do
-      expect(page).to have_content(@order_2.id)
-      expect(page).to have_content(@order_2.created_at)
-      expect(page).to have_content(@order_2.updated_at)
-      expect(page).to have_content(@order_2.current_status)
-      expect(page).to have_content(@order_2.total_quantity)
-      expect(page).to have_content(@order_2.grand_total)
+      expect(page).to have_content("Order id: #{@order_2.id}")
+      expect(page).to have_content("Order Created: #{@order_2.created_at}")
+      expect(page).to have_content("Order Updated: #{@order_2.updated_at}")
+      expect(page).to have_content("Order Current Status: #{@order_2.current_status}")
+      expect(page).to have_content("Order Total Quantity: #{@order_2.total_quantity}")
+      expect(page).to have_content("Order Grand Total: #{@order_2.grand_total}")
     end
   end
 end
