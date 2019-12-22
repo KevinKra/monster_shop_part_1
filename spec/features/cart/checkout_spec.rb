@@ -108,8 +108,6 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Warning: You must register or log in to finish the checkout process")
       end
     end
-
-    # another test that the checkout is there if a user is logged in
   end
 
   describe 'When I havent added items to my cart' do
