@@ -61,19 +61,20 @@ RSpec.describe "As a visitor" do
       state = "New York"
       zip = 10001
 
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
-
-      click_button "Create Order"
+      # no longer need this information with new order relationship
+      # fill_in :name, with: name
+      # fill_in :address, with: address
+      # fill_in :city, with: city
+      # fill_in :state, with: state
+      # fill_in :zip, with: zip
+      #
+      # click_button "Create Order"
 
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
 
-      # visit "/merchants/#{brian.id}"
-      # expect(page).to have_link("Delete Merchant")
+      visit "/merchants/#{brian.id}"
+      expect(page).to have_link("Delete Merchant")
     end
   end
 end
