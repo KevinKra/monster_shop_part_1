@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :restrict_admin
+  before_action :restrict_admin, :require_current_user
 
   def add_item
     item = Item.find(params[:item_id])
@@ -45,5 +45,9 @@ class CartController < ApplicationController
   private
     def restrict_admin
       redirect_to "/public/404" if current_admin?
+    end
+
+    def require_current_user
+      flash[:warning] = "Warning: You must register or log in to finish the checkout process"
     end
 end
