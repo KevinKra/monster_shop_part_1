@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   validates_presence_of :name, :street_address, :city, :state, :zip, :email, :password
-	attr_accessor :password_confirmation 
+	attr_accessor :password_confirmation
+
+  has_many :orders
 
 	validates :email, uniqueness: true, presence: true
 	validates_presence_of :password, require: true
