@@ -16,23 +16,103 @@ RSpec.describe 'Cart show' do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
       @items_in_cart = [@paper,@tire,@pencil]
+      visit "/cart"
     end
 
-    it 'Theres a link to checkout' do
-      visit "/cart"
+    it 'Next to each item in my cart, I see a buttons to increment the count' do
+      within "#cart-item-#{@tire.id}" do
+        expect(page).to have_link('+')
+        expect(page).to have_link('-')
+      end
+      within "#cart-item-#{@pencil.id}" do
+        expect(page).to have_link('+')
+        expect(page).to have_link('-')
+      end
+      within "#cart-item-#{@paper.id}" do
+        expect(page).to have_link('+')
+        expect(page).to have_link('-')
+      end
+    end
 
-      expect(page).to have_link("Checkout")
+    it 'I can increment the count up to the max' do
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("1")
+      end
 
-      click_on "Checkout"
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+      expect(current_path).to eq('/cart')
 
-      expect(current_path).to eq("/orders/new")
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("2")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("3")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      expect(current_path).to eq('/cart')
+
+      within ".error-flash" do
+        expect(page).to have_content("Out of stock")
+      end
+    end
+
+    it 'I can increment the item to deletion' do
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("1")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '+'
+      end
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("2")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '-'
+      end
+
+      expect(current_path).to eq('/cart')
+
+      within "#item-quantity-#{@paper.id}" do
+        expect(page).to have_content("1")
+      end
+
+      within "#cart-item-#{@paper.id}" do
+        click_on '-'
+      end
+
+      expect(current_path).to eq('/cart')
+
+      within ".notice-flash" do
+        expect(page).to have_content("Item has been removed from the cart")
+      end
+
+      expect(page).not_to have_css("cart-item-#{@paper.id}")
+    end
+
+    it 'I have items in my cart, I see information telling me I must register or log in to finish checking out' do
+      within ".warning-flash" do
+        expect(page).to have_content("Warning: You must register or log in to finish the checkout process")
+      end
     end
   end
 
   describe 'When I havent added items to my cart' do
     it 'There is not a link to checkout' do
       visit "/cart"
-
       expect(page).to_not have_link("Checkout")
     end
   end

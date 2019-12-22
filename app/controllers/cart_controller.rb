@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :restrict_admin
+  before_action :restrict_admin, :require_current_user
 
   def add_item
     item = Item.find(params[:item_id])
@@ -22,8 +22,32 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
+  def edit_quantity
+    item = Item.find(params[:item_id])
+    if params[:quantity] == "add" && item.inventory > session[:cart][params[:item_id]]
+      session[:cart][params[:item_id]] += 1
+      redirect_to '/cart'
+    elsif params[:quantity] == "add"
+      flash[:error] = "Out of stock"
+      redirect_to '/cart'
+    elsif params[:quantity] == "subtract" && session[:cart][params[:item_id]] > 1
+      session[:cart][params[:item_id]] -= 1
+      redirect_to '/cart'
+    elsif params[:quantity] == "subtract" && session[:cart][params[:item_id]] == 1
+      flash[:notice] = "Item has been removed from the cart"
+      remove_item
+    else
+      flash[:error] == "Something went wrong, try again."
+      redirect_to '/cart'
+    end
+  end
+
   private
     def restrict_admin
       redirect_to "/public/404" if current_admin?
+    end
+
+    def require_current_user
+      flash[:warning] = "Warning: You must register or log in to finish the checkout process"
     end
 end

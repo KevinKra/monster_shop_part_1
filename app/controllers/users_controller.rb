@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		# binding.pry
     if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id

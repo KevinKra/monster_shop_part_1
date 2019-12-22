@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe Order, type: :model do
   describe "validations" do
-    it { should validate_presence_of :name }
-    it { should validate_presence_of :address }
-    it { should validate_presence_of :city }
-    it { should validate_presence_of :state }
-    it { should validate_presence_of :zip }
+    # it { should validate_presence_of :name }
+    # it { should validate_presence_of :address }
+    # it { should validate_presence_of :city }
+    # it { should validate_presence_of :state }
+    # it { should validate_presence_of :zip }
   end
 
   describe "relationships" do
@@ -14,6 +14,12 @@ describe Order, type: :model do
     it {should have_many(:items).through(:item_orders)}
   end
 
+  describe 'current_status' do
+    it "is created as pending" do
+      order = Order.create
+      expect(order.current_status).to eq("pending")
+    end
+  end
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -27,8 +33,13 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
-    it 'grandtotal' do
-      expect(@order_1.grandtotal).to eq(230)
+
+    it 'total quantity' do
+      expect(@order_1.total_quantity).to eq(5)
+    end
+
+    it 'grand total' do
+      expect(@order_1.grand_total).to eq(230)
     end
   end
 end

@@ -30,7 +30,8 @@
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
+          <p id = "item-quantity-<%=item.id%>"><%=quantity%></p>
+          <p><%= link_to "+", "/cart/#{item.id}/add",method: :patch %> or <%= link_to "-", "/cart/#{item.id}/subtract",method: :patch %></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
         </td>
@@ -42,7 +43,7 @@
 </table>
   <p>Total: <%= number_to_currency(cart.total) %></p>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
-  <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
+  <p><%= link_to "Checkout", "/profile/orders", method: :post if current_user %></p>
 <% else %>
   <h3 align= "center">Cart is currently empty</h3>
 <% end %>
