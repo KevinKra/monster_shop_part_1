@@ -5,7 +5,12 @@ class Order <ApplicationRecord
   has_many :items, through: :item_orders
 
   enum current_status: ["pending"]
-  # def grandtotal
-  #   item_orders.sum('price * quantity')
-  # end
+
+  def total_quantity
+    ItemOrder.where(order_id: self.id).sum(:quantity)
+  end
+
+  def grand_total
+    item_orders.sum('price * quantity')
+  end
 end
