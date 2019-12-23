@@ -8,6 +8,7 @@
     <p>Name: <%= link_to order.user_name, "/admin/users/#{order.user_id}" %></p>
     <p>Order id: <%= order.id %></p>
     <p>Created on: <%= order.created_at %></p>
+    <%= link_to 'Ship Order', "/orders/#{order.id}/ship", method: :patch if order.current_status == "packaged"%>
   </section>
   <% end %>
 </main>
