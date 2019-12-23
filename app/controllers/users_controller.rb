@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
 	before_action :require_user, only: [:show, :index]
 
-	# not needed at this time
-  # def index
-	# 	@users = User.all
-  # end
-
 	def show
 		@user = User.find(session[:user_id])
 	end
