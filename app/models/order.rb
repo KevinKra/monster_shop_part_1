@@ -7,7 +7,7 @@ class Order <ApplicationRecord
   enum current_status: ["pending", "cancelled", "packaged", "shipped"]
 
   def total_quantity
-    ItemOrder.where(order_id: self.id).sum(:quantity)
+    item_orders.sum(:quantity)
   end
 
   def grand_total
