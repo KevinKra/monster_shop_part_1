@@ -6,7 +6,7 @@ RSpec.describe "As an admin user" do
   let!(:user_2) { create(:user, :default_user) }
 
   before :each do
-    @order = user.orders.create!
+    @order = user.orders.create!(current_status: 2)
     @order_2 = user_2.orders.create!
     mike = Merchant.create!(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     tire = mike.items.create!(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -32,22 +32,27 @@ RSpec.describe "As an admin user" do
     end
 
     it 'I see all orders in the system' do
+      # need to add testing for orders
+      # Orders are sorted by "status" in this order:
+      # - packaged
+      # - pending
+      # - shipped
+      # - cancelled
       within "#admin-order-#{@order.id}" do
         expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
         expect(page).to have_content("Order id: #{@order.id}")
         expect(page).to have_content("Created on: #{@order.created_at}")
+        expect(page).to have_link("Ship Order")
       end
       within "#admin-order-#{@order_2.id}" do
         expect(page).to have_link(user_2.name, href: "/admin/users/#{user_2.id}")
         expect(page).to have_content("Order id: #{@order_2.id}")
         expect(page).to have_content("Created on: #{@order_2.created_at}")
+        expect(page).not_to have_link("Ship Order")
       end
     end
-    # need to add testing for orders
-    # Orders are sorted by "status" in this order:
-    # - packaged
-    # - pending
-    # - shipped
-    # - cancelled
+  end
+
+  describe '' do
   end
 end
