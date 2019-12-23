@@ -92,7 +92,7 @@ RSpec.describe 'Site Navigation' do
 
       context 'as a merchant' do
         before {
-				  @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+					@bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 					@bike_shop.users << [merchant]
 
           fill_in :email, with: merchant.email
