@@ -18,6 +18,7 @@ class CartController < ApplicationController
   end
 
   def remove_item
+    flash[:notice] = "Item has been removed from the cart"
     session[:cart].delete(params[:item_id])
     redirect_to '/cart'
   end
@@ -34,11 +35,7 @@ class CartController < ApplicationController
       session[:cart][params[:item_id]] -= 1
       redirect_to '/cart'
     elsif params[:quantity] == "subtract" && session[:cart][params[:item_id]] == 1
-      flash[:notice] = "Item has been removed from the cart"
       remove_item
-    else
-      # flash[:error] == "Something went wrong, try again."
-      # redirect_to '/cart'
     end
   end
 
