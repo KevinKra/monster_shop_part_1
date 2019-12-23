@@ -51,8 +51,21 @@ RSpec.describe "As an admin user" do
         expect(page).not_to have_link("Ship Order")
       end
     end
+
+    it 'I can ship a packaged order' do
+      within "#admin-order-#{@order.id}" do
+        click_on "Ship Order"
+      end
+
+      expect(current_path).to eq("/admin/dashboard")
+
+      within "#admin-order-#{@order.id}" do
+        expect(page).to have_link(user.name, href: "/admin/users/#{user.id}")
+        expect(page).to have_content("Order id: #{@order.id}")
+        expect(page).to have_content("Created on: #{@order.created_at}")
+        expect(page).not_to have_link("Ship Order")
+      end
+    end
   end
 
-  describe '' do
-  end
 end
