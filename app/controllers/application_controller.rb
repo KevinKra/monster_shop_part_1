@@ -24,4 +24,5 @@ class ApplicationController < ActionController::Base
   def current_default?
     current_user && current_user.default?
   end
+
 end

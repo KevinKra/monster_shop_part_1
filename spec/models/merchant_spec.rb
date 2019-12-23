@@ -11,6 +11,7 @@ describe Merchant, type: :model do
 
   describe "relationships" do
     it {should have_many :items}
+		it {should have_many :users}
   end
 
   describe 'instance methods' do
@@ -50,6 +51,5 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to eq(["Denver","Hershey"])
     end
-
   end
 end
