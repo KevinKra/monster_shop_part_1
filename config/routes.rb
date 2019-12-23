@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   get "/orders/new", to: "orders#new"
   get "/orders/:id", to: "orders#show"
+	patch "/orders/:id/:status", to: "orders#update"
 	get "/profile/orders", to: 'orders#index'
 	get "/profile/orders/:id", to: "orders#show"
 	patch "/profile/orders/:id", to: "orders#update"
