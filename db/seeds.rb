@@ -66,3 +66,5 @@ merchant = User.create(
     password: "merchant",
     role: 2
 )
+
+bike_shop.users << [merchant]
