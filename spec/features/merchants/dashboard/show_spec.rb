@@ -18,6 +18,8 @@ RSpec.describe "As a merchant user" do
     it 'it should display content relevant to my role' do
       expect(page).to have_content("Merchant Dashboard")
     end
+	end
+
     it 'it should display my companies name and full address' do
       expect(page).to have_content("#{@merchant_company.name}")
       expect(page).to have_content("#{@merchant_company.address}")
@@ -25,6 +27,4 @@ RSpec.describe "As a merchant user" do
       expect(page).to have_content("#{@merchant_company.state}")
       expect(page).to have_content("#{@merchant_company.zip}")
     end
-  end
-
-end
+	end 

@@ -1,6 +1,6 @@
 <section class="user-dashboard">
   <h2>Merchant Dashboard</h2>
-	<%= binding.pry %>
+
  	<%= @merchant.name %>
  	<%= @merchant.address %>
  	<%= @merchant.city %>
@@ -8,15 +8,11 @@
  	<%= @merchant.zip %>
 
 	<%= @merchant.items.orders.each do |order| %>
-		<%= link_to "#{order.id}", "/merchant/orders/"#{order.id}" %>
+		<%= link_to "#{order.id}", "/merchant/orders"%>
 		<%= order.date %>
 		<%= order.sum(:items) %>
 		<%= order.sum(:price) %>
 	<% end %>
+</section>
 
 	<%= button_to "All Items", "/merchant/items", method: :get %>
-
-	
-
-
-</section>
