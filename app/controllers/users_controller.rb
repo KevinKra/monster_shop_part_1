@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
 	before_action :require_user, only: [:show, :index]
 
-  def index
-		@users = User.all
-  end
+	# not needed at this time
+  # def index
+	# 	@users = User.all
+  # end
 
 	def show
 		@user = User.find(session[:user_id])
@@ -15,14 +16,10 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		# binding.pry
     if @user.save && @user.password == @user.password_confirmation
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
       redirect_to "/profile"
-		elsif !@user.save && @user.password == @user.password_confirmation
-			flash[:error] = @user.errors.full_messages.to_sentence
-      redirect_to "/register"
     else
       flash[:error] = @user.errors.full_messages.to_sentence
 			redirect_to '/register'
@@ -36,6 +33,7 @@ class UsersController < ApplicationController
 			redirect_to "/profile"
 			flash[:success] = "Updates saved!"
 		else
+			# this is not being tested according to SimpleCov Coverage Report
 			flash[:error] = @user.errors.full_messages.to_sentence
 			render :edit
 		end

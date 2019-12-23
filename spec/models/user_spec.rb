@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+	let!(:user) { create(:user, :default_user) }
+
 	describe 'validations' do
 		it {should validate_presence_of :name}
 		it {should validate_presence_of :street_address}
@@ -13,8 +15,20 @@ RSpec.describe User, type: :model do
 		it {should validate_uniqueness_of :email}
 	end
 
-	describe "relationships" do
-		it {belong_to :merchant}
+
+	describe 'relationships' do
+    it {belong_to :merchant}
+		it {should have_many :orders}
+	end
+
+	describe 'instance methods' do
+		it "returns if a user has an order" do
+			expect(user.has_orders?).not_to eq(true)
+
+			user.orders.create
+
+			expect(user.has_orders?).to eq(true)
+		end
 	end
 
 	describe "roles" do

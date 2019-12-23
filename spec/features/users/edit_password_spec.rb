@@ -37,20 +37,20 @@ RSpec.describe "As a User" do
 
 			expect(current_path).to eq('/profile')
 			expect(page).to have_content('Your Password has been updated!')
-			
+
 			click_on "Logout"
 
 			visit "/login"
 
 			fill_in :email, with: user.email
 			fill_in :password, with: 'user2'
-			
+
 			click_on "Sign In"
 
 			expect(current_path).to eq("/profile")
 		end
 
-		it "I am redirected qrjkewghrkwegrkewghr the new Password Form to complete my request" do
+		it "I am redirected the new Password Form to complete my request" do
 			visit '/profile'
 			click_on 'Edit Password'
 

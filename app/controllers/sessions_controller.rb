@@ -27,8 +27,8 @@
         redirect_to '/profile'
         flash[:success] = "Welcome, #{user.name}."
       else
-        redirect_to "/"
-        flash[:failure] = "Sorry, something went wrong."
+        # redirect_to "/"
+        # flash[:failure] = "Sorry, something went wrong."
       end
     else
       flash.now[:notice] = "Sorry, wrong username or password."

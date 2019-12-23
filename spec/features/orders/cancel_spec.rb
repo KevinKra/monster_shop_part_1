@@ -1,10 +1,10 @@
 require 'rails_helper'
-# User Story 26, Registered users can check out
+# User Story 30, User cancels an order
 
-RSpec.describe "As a registered user, When I add items to my cart" do
+RSpec.describe "As a registered user, When I visit an order's show page" do
   let!(:user) { create(:user, :default_user) }
 
-  before(:each) do
+  before :each do
     @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -27,23 +27,45 @@ RSpec.describe "As a registered user, When I add items to my cart" do
 
     visit "/cart"
     click_on "Checkout"
-
   end
-  describe "When I add Items to my cart and visit my cart, I click the button or link to check out" do
-    it "I am taken to my orders page and see my new order listed" do
-      expect(current_path).to eq("/profile/orders")
+  it "I see a link to cancel the order only if the order is still pending" do
+    expect(Order.count).to eq(1)
+    order = Order.last
 
+    visit "/profile/orders/#{order.id}"
+    expect(page).to have_link("Cancel Order")
+    # add additional testing once there is more than one current status (pending)
+  end
+
+  describe "When I click the cancel button for an order" do
+    it "I am returned to my profile page" do
       expect(Order.count).to eq(1)
-      expect(page).to have_css("#section-order-#{Order.last.id}")
+      order = Order.last
 
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
+      expect(current_path).to eq("/profile/orders")
+    end
+
+    it "I see a flash message telling me the order is now cancelled" do
+      expect(Order.count).to eq(1)
+      order = Order.last
+
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
       within ".notice-flash" do
-        expect(page).to have_content("Your order has been created.")
+        expect(page).to have_content("Your order has been cancelled.")
       end
     end
 
-    it "My cart is now empty" do
-      within 'nav' do
-        expect(page).to have_content("Cart: 0")
+    it "I see that this order now has an updated status of 'canceled'" do
+      expect(Order.count).to eq(1)
+      order = Order.last
+
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
+      within "#section-order-#{order.id}" do
+        expect(page).to have_content("Order Current Status: cancelled")
       end
     end
   end

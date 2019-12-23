@@ -55,6 +55,24 @@ describe Item, type: :model do
     it 'quantity_bought' do
       expect(@chain_2.quantity_bought).to eq(2)
     end
+
+    it 'order count' do
+      order = Order.create
+      order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
+      order_2 = Order.create
+      order_2.item_orders.create(item: @chain, price: @chain.price, quantity: 5)
+
+      expect(@chain.order_count(order.id)).to eq(2)
+    end
+
+    it 'order subtotal' do
+      order = Order.create
+      order.item_orders.create(item: @chain, price: 200, quantity: 2)
+      order_2 = Order.create
+      order_2.item_orders.create(item: @chain, price: @chain.price, quantity: 5)
+
+      expect(@chain.order_subtotal(order.id)).to eq(400)
+    end
   end
   describe "class methods" do
     before(:each) do

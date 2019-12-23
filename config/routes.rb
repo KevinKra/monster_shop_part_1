@@ -35,14 +35,19 @@ Rails.application.routes.draw do
   patch "/reviews/:id", to: "reviews#update"
   delete "/reviews/:id", to: "reviews#destroy"
 
-  post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
+	patch "/cart/:item_id/:quantity", to: "cart#edit_quantity"
+	post "/cart/:item_id", to: "cart#add_item"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
   get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+	patch "/orders/:id/:status", to: "orders#update"
+	get "/profile/orders", to: 'orders#index'
+	get "/profile/orders/:id", to: "orders#show"
+	patch "/profile/orders/:id", to: "orders#update"
+	post "/profile/orders", to: "orders#create"
 
 	get "/register", to: 'users#new'
 	get "/users", to: 'users#index'
@@ -50,6 +55,7 @@ Rails.application.routes.draw do
   get "/profile", to: 'users#show'
   post "/register", to: 'users#create'
   get "/profile/edit_password", to: 'users#edit_password'
+
   patch "/profile", to: 'users#update_password'
 
 	get '/login', to: 'sessions#new'
