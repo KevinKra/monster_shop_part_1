@@ -48,6 +48,14 @@ RSpec.describe "As a registered user, When I visit an order's show page" do
     end
 
     it "I see a flash message telling me the order is now cancelled" do
+      expect(Order.count).to eq(1)
+      order = Order.last
+
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
+      within ".notice-flash" do
+        expect(page).to have_content("Your order has been cancelled.")
+      end
     end
 
     it "I see that this order now has an updated status of 'canceled'" do

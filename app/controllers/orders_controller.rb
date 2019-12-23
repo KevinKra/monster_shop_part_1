@@ -13,6 +13,7 @@ class OrdersController <ApplicationController
   end
 
   def update
+    flash[:notice] = "Your order has been cancelled."
     redirect_to "/profile/orders"
   end
 
