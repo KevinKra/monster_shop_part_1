@@ -21,19 +21,15 @@ class OrdersController <ApplicationController
 
   def create
     order = current_user.orders.create
-    if order.save
-      cart.items.each do |item,quantity|
-        order.item_orders.create({
-          item: item,
-          quantity: quantity,
-          price: item.price
-          })
-      end
-      session.delete(:cart)
-      flash[:notice] = "Your order has been created."
-      redirect_to '/profile/orders'
-    else
-      flash[:notice] = "Something went wrong"
+    cart.items.each do |item,quantity|
+      order.item_orders.create({
+        item: item,
+        quantity: quantity,
+        price: item.price
+        })
     end
+    session.delete(:cart)
+    flash[:notice] = "Your order has been created."
+    redirect_to '/profile/orders'
   end
 end
