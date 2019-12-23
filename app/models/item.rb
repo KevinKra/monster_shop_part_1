@@ -9,6 +9,7 @@ class Item <ApplicationRecord
                         :price,
                         :image,
                         :inventory
+
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
 
@@ -46,15 +47,15 @@ class Item <ApplicationRecord
   end
 
   def quantity_bought
-    ItemOrder.where(item_id: self.id).sum(:quantity)
+    item_orders.sum(:quantity)
   end
 
   def order_count(order_id)
-    ItemOrder.where(item_id: self.id, order_id: order_id).sum(:quantity)
+    item_orders.where(order_id: order_id).select(:quantity).first.quantity
   end
 
   def order_subtotal(order_id)
-    unit_price = ItemOrder.where(item_id: self.id, order_id: order_id).sum(:price)
+    unit_price = item_orders.where(order_id: order_id).select(:price).first.price
     unit_price * order_count(order_id)
   end
 end
