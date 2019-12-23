@@ -32,8 +32,8 @@ class UsersController < ApplicationController
 			redirect_to "/profile"
 			flash[:success] = "Updates saved!"
 		else
-			flash[:error] = @user.errors.full_messages.to_sentence
-			render :edit
+			# flash[:error] = @user.errors.full_messages.to_sentence
+			# render :edit
 		end
 	end
 
