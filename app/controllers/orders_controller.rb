@@ -15,6 +15,7 @@ class OrdersController <ApplicationController
   def update
     order = Order.find(params[:id])
     order.update(current_status: 1)
+    status_update_unfulfilled(order)
     flash[:notice] = "Your order has been cancelled."
     redirect_to "/profile/orders"
   end
@@ -31,5 +32,14 @@ class OrdersController <ApplicationController
     session.delete(:cart)
     flash[:notice] = "Your order has been created."
     redirect_to '/profile/orders'
+  end
+
+  private
+
+  def status_update_unfulfilled(order)
+    item_orders = ItemOrder.where(order_id: order.id)
+    item_orders.each do |item_order|
+      item_order.update(status: 0)
+    end
   end
 end
