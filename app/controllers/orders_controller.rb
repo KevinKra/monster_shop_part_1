@@ -13,11 +13,17 @@ class OrdersController <ApplicationController
   end
 
   def update
-    order = Order.find(params[:id])
-    order.update(current_status: 1)
-    status_update_unfulfilled(order)
-    flash[:notice] = "Your order has been cancelled."
-    redirect_to "/profile/orders"
+    if params[:status] == "ship"
+      order = Order.find(params[:id])
+      order.update(current_status: 3)
+      redirect_to "/admin/dashboard"
+    else
+      order = Order.find(params[:id])
+      order.update(current_status: 1)
+      status_update_unfulfilled(order)
+      flash[:notice] = "Your order has been cancelled."
+      redirect_to "/profile/orders"
+    end
   end
 
   def create
