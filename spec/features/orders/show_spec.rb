@@ -57,16 +57,3 @@ RSpec.describe "As a registered User, I can view an order show page" do
     end
   end
 end
-
-# As a registered user
-# When I visit my Profile Orders page
-# And I click on a link for order's show page
-# My URL route is now something like "/profile/orders/15"
-# I see all information about the order, including the following information:
-# - the ID of the order
-# - the date the order was made
-# - the date the order was last updated
-# - the current status of the order
-# - each item I ordered, including name, description, thumbnail, quantity, price and subtotal
-# - the total quantity of items in the whole order
-# - the grand total of all items for that order
