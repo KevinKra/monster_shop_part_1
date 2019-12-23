@@ -37,8 +37,8 @@ class CartController < ApplicationController
       flash[:notice] = "Item has been removed from the cart"
       remove_item
     else
-      flash[:error] == "Something went wrong, try again."
-      redirect_to '/cart'
+      # flash[:error] == "Something went wrong, try again."
+      # redirect_to '/cart'
     end
   end
 

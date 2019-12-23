@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 	before_action :require_user, only: [:show, :index]
 
-  def index
-		@users = User.all
-  end
+  # def index
+	# 	@users = User.all
+  # end
 
 	def show
 		@user = User.find(session[:user_id])
@@ -19,9 +19,6 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome, #{@user.name}"
       session[:user_id] = @user.id
       redirect_to "/profile"
-		elsif !@user.save && @user.password == @user.password_confirmation
-			flash[:error] = @user.errors.full_messages.to_sentence
-      redirect_to "/register"
     else
       flash[:error] = @user.errors.full_messages.to_sentence
 			redirect_to '/register'
