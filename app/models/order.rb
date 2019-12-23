@@ -4,7 +4,7 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
-  enum current_status: ["pending", "cancelled"]
+  enum current_status: ["pending", "cancelled", "packaged", "shipped"]
 
   def total_quantity
     ItemOrder.where(order_id: self.id).sum(:quantity)
