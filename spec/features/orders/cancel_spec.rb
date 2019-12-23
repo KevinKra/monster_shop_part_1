@@ -59,6 +59,14 @@ RSpec.describe "As a registered user, When I visit an order's show page" do
     end
 
     it "I see that this order now has an updated status of 'canceled'" do
+      expect(Order.count).to eq(1)
+      order = Order.last
+
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
+      within "#section-order-#{order.id}" do
+        expect(page).to have_content("Order Current Status: cancelled")
+      end
     end
   end
 end
