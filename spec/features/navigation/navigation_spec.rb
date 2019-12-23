@@ -15,7 +15,7 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_link("All Items", href: "/items")
       end
     end
-    
+
     it 'all user types should have functioning default links' do
       # See above after(:each)
     end
@@ -60,7 +60,7 @@ RSpec.describe 'Site Navigation' do
           expect(page).to_not have_link("Login", href: "/login")
           expect(page).to_not have_link("Register", href: "/register")
         }
-        
+
         it 'should include a link to the user profile dashboard' do
           expect(page).to have_link("My Profile", href: "/profile")
         end
@@ -83,7 +83,7 @@ RSpec.describe 'Site Navigation' do
           it "I see a 404 error" do
             visit '/merchant'
             expect(page).to have_content("Error 404: You don't have access to this section.")
-        
+
             visit '/admin'
             expect(page).to have_content("Error 404: You don't have access to this section.")
           end
@@ -92,6 +92,9 @@ RSpec.describe 'Site Navigation' do
 
       context 'as a merchant' do
         before {
+				  @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+					@bike_shop.users << [merchant]
+
           fill_in :email, with: merchant.email
           fill_in :password, with: merchant.password
           click_on "Sign In"

@@ -1,4 +1,5 @@
-class Merchants::DashboardController < ApplicationController
+class Merchants::DashboardController < Merchants::BaseController
+
   def show
 		@merchant = current_user.merchant
   end

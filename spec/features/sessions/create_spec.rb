@@ -10,6 +10,7 @@ RSpec.describe 'User logging in' do
 
     context 'user is an admin' do
       before {
+
         fill_in :email, with: admin.email
         fill_in :password, with: admin.password
 
@@ -30,6 +31,9 @@ RSpec.describe 'User logging in' do
 
     context 'user is a merchant' do
       before {
+				@bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+				@bike_shop.users << [merchant]
+
         fill_in :email, with: merchant.email
         fill_in :password, with: merchant.password
 
@@ -114,6 +118,9 @@ RSpec.describe 'User logging in' do
       end
 
       it 'if an merchant, back to their merchant dashboard' do
+				@bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
+				@bike_shop.users << [merchant]
+				
         fill_in :email, with: merchant.email
         fill_in :password, with: merchant.password
         click_on "Sign In"
