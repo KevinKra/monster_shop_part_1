@@ -25,8 +25,9 @@ RSpec.describe "As a registered User, I can view an order show page" do
   end
 
   it "I click on the id link from the Order Index Page and redirect to the Show Page" do
-    visit '/profile/orders'
     order = Order.last
+
+    visit '/profile/orders'
     within("#section-order-#{Order.last.id}") do
       click_link(Order.last.id)
     end
@@ -37,7 +38,24 @@ RSpec.describe "As a registered User, I can view an order show page" do
     expect(page).to have_content("Order Updated: #{order.updated_at}")
     expect(page).to have_content("Order Current Status: #{order.current_status}")
     expect(page).to have_content("Order Total Quantity: #{order.total_quantity}")
-    expect(page).to have_content("Order Grand Total: #{order.grand_total}")  end
+    expect(page).to have_content("Order Grand Total: #{order.grand_total}")
+
+    within "#order-item-#{@tire.id}" do
+      expect(page).to have_content("Item Name: #{@tire.name}")
+      expect(page).to have_content("Item Description: #{@tire.description}")
+      expect(page).to have_content("Item Order Count: 1")
+      expect(page).to have_content("Item Price: 100")
+      expect(page).to have_content("Item Order Subtotal: 100")
+    end
+
+    within "#order-item-#{@pencil.id}" do
+      expect(page).to have_content("Item Name: #{@pencil.name}")
+      expect(page).to have_content("Item Description: #{@pencil.description}")
+      expect(page).to have_content("Item Order Count: 1")
+      expect(page).to have_content("Item Price: 2")
+      expect(page).to have_content("Item Order Subtotal: 2")
+    end
+  end
 end
 
 # As a registered user
