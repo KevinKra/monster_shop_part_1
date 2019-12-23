@@ -12,6 +12,10 @@ class OrdersController <ApplicationController
     # current_user.orders
   end
 
+  def update
+    redirect_to "/profile/orders"
+  end
+
   def create
     order = current_user.orders.create
     if order.save
