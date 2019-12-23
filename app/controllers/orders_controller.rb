@@ -14,13 +14,10 @@ class OrdersController <ApplicationController
 
   def update
     if params[:status] == "ship"
-      order = Order.find(params[:id])
-      order.update(current_status: 3)
+      status_update_shipped
       redirect_to "/admin/dashboard"
     else
-      order = Order.find(params[:id])
-      order.update(current_status: 1)
-      status_update_unfulfilled(order)
+      status_update_cancelled
       flash[:notice] = "Your order has been cancelled."
       redirect_to "/profile/orders"
     end
@@ -29,11 +26,7 @@ class OrdersController <ApplicationController
   def create
     order = current_user.orders.create
     cart.items.each do |item,quantity|
-      order.item_orders.create({
-        item: item,
-        quantity: quantity,
-        price: item.price
-        })
+      order.item_orders.create({item: item, quantity: quantity, price: item.price})
     end
     session.delete(:cart)
     flash[:notice] = "Your order has been created."
@@ -42,10 +35,17 @@ class OrdersController <ApplicationController
 
   private
 
-  def status_update_unfulfilled(order)
+  def status_update_cancelled
+    order = Order.find(params[:id])
+    order.update(current_status: 1)
     item_orders = ItemOrder.where(order_id: order.id)
     item_orders.each do |item_order|
       item_order.update(status: 0)
     end
+  end
+
+  def status_update_shipped
+    order = Order.find(params[:id])
+    order.update(current_status: 1)
   end
 end
