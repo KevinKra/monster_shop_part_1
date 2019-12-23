@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_action :require_user, only: [:show, :index]
 
+	# not needed at this time
   # def index
 	# 	@users = User.all
   # end
@@ -32,8 +33,9 @@ class UsersController < ApplicationController
 			redirect_to "/profile"
 			flash[:success] = "Updates saved!"
 		else
-			# flash[:error] = @user.errors.full_messages.to_sentence
-			# render :edit
+			# this is not being tested according to SimpleCov Coverage Report
+			flash[:error] = @user.errors.full_messages.to_sentence
+			render :edit
 		end
 	end
 
