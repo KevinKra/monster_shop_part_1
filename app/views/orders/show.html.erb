@@ -8,13 +8,13 @@
   <p>Order Total Quantity: <%=  @order.total_quantity %></p>
   <p>Order Grand Total: <%=  @order.grand_total %></p>
   <% @order.items.each do |item| %>
-  <section id = "order-item-<%=item.id%>"
+  <section id="order-item-<%=item.id%>">
     <p>Item Name: <%= item.name %></p>
     <p>Item Description: <%= item.description %></p>
     <p>Item Order Count: <%= item.order_count(@order.id) %></p>
     <p>Item Price: <%= item.price %></p>
     <p>Item Order Subtotal: <%= item.order_subtotal(@order.id) %></p>
-    <img src= <%= item.image %>
+    <img src= <%= item.image %> />
   </section>
   <% end %>
 </section>
