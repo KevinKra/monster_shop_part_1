@@ -48,4 +48,13 @@ class Item <ApplicationRecord
   def quantity_bought
     ItemOrder.where(item_id: self.id).sum(:quantity)
   end
+
+  def order_count(order_id)
+    ItemOrder.where(item_id: self.id, order_id: order_id).sum(:quantity)
+  end
+
+  def order_subtotal(order_id)
+    unit_price = ItemOrder.where(item_id: self.id, order_id: order_id).sum(:price)
+    unit_price * order_count(order_id)
+  end
 end

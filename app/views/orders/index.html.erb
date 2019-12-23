@@ -2,7 +2,7 @@
 
 <% @orders.each do |order| %>
 <section id ="section-order-<%=order.id%>">
-  <p>Order id: <%=  order.id %></p>
+  <p>Order id: <%=  link_to order.id, "/profile/orders/#{order.id}" %></p>
   <p>Order Created: <%=  order.created_at %></p>
   <p>Order Updated: <%=  order.updated_at %></p>
   <p>Order Current Status: <%=  order.current_status %></p>

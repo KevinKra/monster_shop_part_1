@@ -10,4 +10,8 @@ class User < ApplicationRecord
   enum role: ["default", "admin", "merchant"]
 
 	has_secure_password
+
+  def has_orders?
+     true unless orders.empty?
+  end
 end
