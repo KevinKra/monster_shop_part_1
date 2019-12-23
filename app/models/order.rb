@@ -13,4 +13,8 @@ class Order <ApplicationRecord
   def grand_total
     item_orders.sum('price * quantity')
   end
+
+  def user_name
+    User.find(user_id).name
+  end
 end
