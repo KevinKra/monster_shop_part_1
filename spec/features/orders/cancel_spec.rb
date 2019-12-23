@@ -34,10 +34,17 @@ RSpec.describe "As a registered user, When I visit an order's show page" do
 
     visit "/profile/orders/#{order.id}"
     expect(page).to have_link("Cancel Order")
+    # add additional testing once there is more than one current status (pending)
   end
 
   describe "When I click the cancel button for an order" do
     it "I am returned to my profile page" do
+      expect(Order.count).to eq(1)
+      order = Order.last
+
+      visit "/profile/orders/#{order.id}"
+      click_link "Cancel Order"
+      expect(current_path).to eq("/profile/orders")
     end
 
     it "I see a flash message telling me the order is now cancelled" do
