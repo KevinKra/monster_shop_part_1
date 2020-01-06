@@ -57,4 +57,8 @@ class Item <ApplicationRecord
     unit_price = ItemOrder.where(item_id: self.id, order_id: order_id).sum(:price)
     unit_price * order_count(order_id)
   end
+
+  def ordered?
+    ItemOrder.exists?(:item_id=>self.id)
+  end
 end

@@ -73,6 +73,11 @@ describe Item, type: :model do
 
       expect(@chain.order_subtotal(order.id)).to eq(400)
     end
+
+    it 'ordered?' do
+      expect(@chain_2.ordered?).to eq(true)
+      expect(@chain.ordered?).to eq(false)
+    end
   end
   describe "class methods" do
     before(:each) do
