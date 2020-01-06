@@ -34,6 +34,9 @@
         <p>Inactive</p>
         <%= link_to 'Activate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/activate", method: :patch %>
       <% end %>
+      <% if item.no_orders? %>
+        <%= link_to 'Delete Item', "/items/#{item.id}" , method: :delete %>
+      <% end %>
     </section>
     <% end %>
 </section>
