@@ -57,7 +57,8 @@ class ItemsController<ApplicationController
     item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
     item.destroy
-    redirect_to "/items"
+    flash[:notice] = "Item #{item.name} has been deleted."
+    redirect_to "/merchants/#{item.merchant.id}/items"
   end
 
   private
