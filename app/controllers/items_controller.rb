@@ -38,6 +38,10 @@ class ItemsController<ApplicationController
       @item.update(active?: false)
       flash[:notice] = "Item #{@item.name} has been deactivated."
       redirect_to "/merchants/#{@item.merchant.id}/items"
+    elsif params[:active_status] == "activate"
+      @item.update(active?: true)
+      flash[:notice] = "Item #{@item.name} has been activated."
+      redirect_to "/merchants/#{@item.merchant.id}/items"
     else
       @item.update(item_params)
       if @item.save
