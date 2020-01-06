@@ -17,9 +17,10 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
+        expect(page).not_to have_content(@tire.description)
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to have_link("Deactivate Item")
+        expect(page).not_to have_link("Activate Item")
       end
 
       within "#item-#{@chain.id}" do
@@ -27,9 +28,11 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@chain.price}")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@chain.description)
+        expect(page).not_to have_content(@chain.description)
         expect(page).to have_content("Inventory: #{@chain.inventory}")
         expect(page).to have_link("Deactivate Item")
+        expect(page).not_to have_link("Activate Item")
+
       end
 
       within "#item-#{@shifter.id}" do
@@ -37,8 +40,9 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@shifter.price}")
         expect(page).to have_css("img[src*='#{@shifter.image}']")
         expect(page).to have_content("Inactive")
-        expect(page).to_not have_content(@shifter.description)
+        expect(page).not_to have_content(@shifter.description)
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
+        expect(page).to have_link("Activate Item")
         expect(page).not_to have_link("Deactivate Item")
       end
     end
@@ -62,6 +66,29 @@ RSpec.describe "Merchant Items Index Page" do
       within "#item-#{@chain.id}" do
         expect(page).to have_content("Inactive")
         expect(page).not_to have_link("Deactivate Item")
+      end
+    end
+
+    it 'I click Deactive Item and item is then deactivated' do
+      within "#item-#{@shifter.id}" do
+        click_link 'Activate Item'
+      end
+
+      expect(current_path).to eq("/merchants/#{@meg.id}/items")
+
+      within "#main-flash" do
+        expect(page).to have_content("Item #{@shifter.name} has been activated.")
+      end
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content("Active")
+        expect(page).to have_link("Deactivate Item")
+      end
+
+      within "#item-#{@shifter.id}" do
+        expect(page).to have_content("Active")
+        expect(page).to have_link("Deactivate Item")
+        expect(page).not_to have_link("Activate Item")
       end
     end
   end
