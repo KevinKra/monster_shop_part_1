@@ -15,4 +15,4 @@
 	<% end %>
 </section>
 
-	<%= button_to "All Items", "/merchant/items", method: :get %>
+<%= button_to "All Items", "/merchants/#{@merchant.id}/items", method: :get %>
