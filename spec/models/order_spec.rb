@@ -4,16 +4,17 @@ describe Order, type: :model do
   let!(:user) { create(:user, :default_user) }
 
   describe "validations" do
-    # it { should validate_presence_of :name }
-    # it { should validate_presence_of :address }
-    # it { should validate_presence_of :city }
-    # it { should validate_presence_of :state }
-    # it { should validate_presence_of :zip }
+    it { should validate_presence_of :name }
+    it { should validate_presence_of :address }
+    it { should validate_presence_of :city }
+    it { should validate_presence_of :state }
+    it { should validate_presence_of :zip }
   end
 
   describe "relationships" do
-    it {should have_many :item_orders}
-    it {should have_many(:items).through(:item_orders)}
+    it { should have_many :item_orders }
+    it { should have_many(:items).through(:item_orders) }
+    it { should belong_to(:user) }
   end
 
   describe 'current_status' do
@@ -22,6 +23,7 @@ describe Order, type: :model do
       expect(order.current_status).to eq("pending")
     end
   end
+
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
