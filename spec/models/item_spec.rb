@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Item, type: :model do
+  let!(:user) { create(:user, :default_user) }
+
   describe "validations" do
     it { should validate_presence_of :name }
     it { should validate_presence_of :description }
@@ -23,7 +25,7 @@ describe Item, type: :model do
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       @chain_2 = @bike_shop.items.create(name: "Chain Number 2", description: "It'll never break! The second one.", price: 100, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
 
-      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: user)
       item_order_1 = order_1.item_orders.create!(item: @chain_2, price: @chain_2.price, quantity: 2)
 
       @review_1 = @chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
@@ -47,7 +49,7 @@ describe Item, type: :model do
 
     it 'no orders' do
       expect(@chain.no_orders?).to eq(true)
-      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: user)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
@@ -57,18 +59,18 @@ describe Item, type: :model do
     end
 
     it 'order count' do
-      order = Order.create
+      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: user)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
-      order_2 = Order.create
+      order_2 = Order.create(name: 'Ryan', address: '123 Stang Ave', city: 'Denver', state: 'CO', zip: 17033, user: user)
       order_2.item_orders.create(item: @chain, price: @chain.price, quantity: 5)
 
       expect(@chain.order_count(order.id)).to eq(2)
     end
 
     it 'order subtotal' do
-      order = Order.create
+      order = Order.create(name: 'Ryan', address: '123 Stang Ave', city: 'Denver', state: 'CO', zip: 17033, user: user)
       order.item_orders.create(item: @chain, price: 200, quantity: 2)
-      order_2 = Order.create
+      order_2 = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user: user)
       order_2.item_orders.create(item: @chain, price: @chain.price, quantity: 5)
 
       expect(@chain.order_subtotal(order.id)).to eq(400)
@@ -94,8 +96,8 @@ describe Item, type: :model do
       @pull_toy = @bike_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @bike_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
-      @order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
-      @order_2 = Order.create!(name: "Kim's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
+      @order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user: user)
+      @order_2 = Order.create!(name: "Kim's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user: user)
 
       ItemOrder.create!(order_id: @order.id, item_id: @tire.id, price: 100, quantity: 10)
       ItemOrder.create!(order_id: @order_2.id, item_id: @tire_2.id, price: 100, quantity: 7)

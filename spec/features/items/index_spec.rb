@@ -2,13 +2,15 @@ require 'rails_helper'
 # user story 17 and 18 feature tests included
 
 RSpec.describe "Items Index Page" do
+  let!(:user) { create(:user, :default_user) }
+
   describe "When I visit the items index page" do
     before(:each) do
       @meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create!(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
-      @order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
-      @order_2 = Order.create!(name: "Kim's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
+      @order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user: user)
+      @order_2 = Order.create!(name: "Kim's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user: user)
 
       @tire = @meg.items.create!(name: "Gatorskins-1", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @tire_2 = @meg.items.create!(name: "Gatorskins-2", description: "I am number 2", price: 200, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 13)
