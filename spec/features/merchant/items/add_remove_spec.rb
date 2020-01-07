@@ -125,6 +125,51 @@ describe "Merchant can add and remove an item" do
           expect(page).to have_button("Delete Item")
         end
       end
+
+      it "When I enter invalid price the Item is not created" do
+        click_button "Add New Item"
+        expect(current_path).to eq("/merchant/items/new")
+
+        fill_in 'Name', with: "MacBook Pro"
+        fill_in 'Description', with: "Over priced laptop."
+        fill_in 'Price', with: "-10000.00"
+        fill_in 'Inventory', with: "1"
+        click_on "Create Item"
+
+        expect(current_path).to eq("/merchant/items/new")
+
+        within("#main-flash") do
+          expect(page).to have_content("Price must be greater than 0")
+        end
+      end
+      it "When I enter invalid quantity the Item is not created" do
+        click_button "Add New Item"
+        expect(current_path).to eq("/merchant/items/new")
+
+        fill_in 'Name', with: "MacBook Pro"
+        fill_in 'Description', with: "Over priced laptop."
+        fill_in 'Price', with: "10000.00"
+        fill_in 'Inventory', with: "-2"
+        click_on "Create Item"
+
+        expect(current_path).to eq("/merchant/items/new")
+
+        within("#main-flash") do
+          expect(page).to have_content("Inventory must be greater than or equal to 0")
+        end
+      end
+      it "When I don't enter information the Item is not created" do
+        click_button "Add New Item"
+        expect(current_path).to eq("/merchant/items/new")
+
+        click_on "Create Item"
+
+        expect(current_path).to eq("/merchant/items/new")
+
+        within("#main-flash") do
+          expect(page).to have_content("Name can't be blank, Description can't be blank, Price can't be blank, Price is not a number, Inventory can't be blank, and Inventory is not a number")
+        end
+      end
     end
   end
 end
