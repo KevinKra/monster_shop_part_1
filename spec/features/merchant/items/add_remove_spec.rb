@@ -55,13 +55,16 @@ describe "Merchant can add and remove an item" do
     end
     describe "I click a button to add an item" do
       it "I see a form where I can add new information about an item" do
+        click_button "Add New Item"
+        expect(current_path).to eq("/merchant/items/new")
+        expect(page).to have_content("Merchant Items New View")
         within "#merchant-add-item-form" do
-          expect(page).to have_content("Name:")
-          expect(page).to have_content("Description:")
-          expect(page).to have_content("Thumbnail Image URL:")
-          expect(page).to have_content("Price:")
-          expect(page).to have_content("Current Inventory:")
-          expect(page).to have_button("Add Item")
+          expect(page).to have_content("Name")
+          expect(page).to have_content("Description")
+          expect(page).to have_content("Thumbnail Image URL")
+          expect(page).to have_content("Price")
+          expect(page).to have_content("Current Inventory")
+          expect(page).to have_button("Create Item")
         end
       end
     end
