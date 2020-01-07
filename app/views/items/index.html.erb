@@ -1,8 +1,10 @@
 <% if @merchant %>
-  <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
-  <p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
+<h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
 <% else %>
   <h1>All Items</h1>
+<% end %>
+<% if current_merchant? %>
+<p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
 <% end %>
 <section id = "top-5-items">
   <h2>Top 5 Bought Items</h2>
@@ -25,8 +27,6 @@
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
-      <% if !@merchant %>
-      <% end %>
       <% if item.active? %>
         <p>Active</p>
         <%= link_to 'Deactivate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/deactivate", method: :patch %>
@@ -34,7 +34,7 @@
         <p>Inactive</p>
         <%= link_to 'Activate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/activate", method: :patch %>
       <% end %>
-      <% if item.no_orders? %>
+      <% if item.no_orders? && () %>
         <%= link_to 'Delete Item', "/items/#{item.id}" , method: :delete %>
       <% end %>
     </section>
