@@ -1,5 +1,5 @@
 <h1>Merchant Items Index View</h1>
-
+<h2> <%= link_to current_user.merchant.name, "/merchants/dashboard" %> </h2>
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
