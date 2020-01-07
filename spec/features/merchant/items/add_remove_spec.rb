@@ -69,7 +69,6 @@ describe "Merchant can add and remove an item" do
       end
 
       it "When I add valid information and submit the form, the Item is added" do
-        # visit '/merchant/items/new'
         click_button "Add New Item"
         expect(current_path).to eq("/merchant/items/new")
 
@@ -90,6 +89,34 @@ describe "Merchant can add and remove an item" do
           expect(page).to have_content("MacBook Pro")
           expect(page).to have_content("Price: $12,000.00")
           expect(page).to have_css("img[src*='url?sa=i&source=images&cd=&ved=2ahUKEwjd9Z6Gh_LmAhXKGc0KHRl-CxIQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.cnet.com%2Freviews%2Fapple-macbook-pro-with-touch-bar-15-inch-2018-review%2F&psig=AOvVaw1JT7voS2inioj9Tg6tSP11&ust=1578505950629074']")
+          expect(page).to have_content("Active")
+          expect(page).to have_content("Over priced laptop.")
+          expect(page).to have_content("Inventory: 1")
+          expect(page).to have_link("Deactivate Item")
+          expect(page).not_to have_link("Activate Item")
+          expect(page).to have_button("Delete Item")
+        end
+      end
+      it "When I add valid information but not an Image URL and submit the form, the Item is added" do
+        click_button "Add New Item"
+        expect(current_path).to eq("/merchant/items/new")
+
+        fill_in 'Name', with: "MacBook Pro"
+        fill_in 'Description', with: "Over priced laptop."
+        fill_in 'Price', with: "12000.00"
+        fill_in 'Inventory', with: "1"
+        click_on "Create Item"
+
+        item = Item.last
+        expect(current_path).to eq("/merchant/items")
+
+        within("#main-flash") do
+          expect(page).to have_content("Item 'MacBook Pro' is now for sale.")
+        end
+        within "#item-#{item.id}" do
+          expect(page).to have_content("MacBook Pro")
+          expect(page).to have_content("Price: $12,000.00")
+          expect(page).to have_css("img[src*='Default-Image-ValueWalk.jpg']")
           expect(page).to have_content("Active")
           expect(page).to have_content("Over priced laptop.")
           expect(page).to have_content("Inventory: 1")
