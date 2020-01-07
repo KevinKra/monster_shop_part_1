@@ -69,6 +69,7 @@ Rails.application.routes.draw do
 	namespace :merchant do
 		get "/", to: "dashboard#show"
 		get "/items", to: "items#index"
+		patch "/items/:item_id", to: "items#update"
 	end
 
   get '/welcome/home', to: 'welcome#index'
