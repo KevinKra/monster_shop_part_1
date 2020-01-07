@@ -5,6 +5,10 @@ class Merchant::ItemsController < ApplicationController
     @items = Item.where(merchant_id: current_user.merchant.id)
   end
 
+  def new
+    @item = Item.new
+  end
+
   def update
     @item = Item.find(params[:id])
     if @item.active?
