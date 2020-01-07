@@ -9,6 +9,17 @@ class Merchant::ItemsController < ApplicationController
     @item = Item.new
   end
 
+  def create
+    @item = current_user.merchant.items.new(item_params)
+    if @item.save
+      flash[:notice] = "Item '#{params[:item][:name]}' is now for sale."
+      redirect_to '/merchant/items'
+    else
+      flash.now[:warning] = @item.errors.full_messages.to_sentence
+      render :new
+    end
+  end
+
   def update
     @item = Item.find(params[:id])
     if @item.active?
@@ -33,5 +44,9 @@ class Merchant::ItemsController < ApplicationController
 
   def require_merchant_access
     render file: "/public/404" unless current_merchant?
+  end
+
+  def item_params
+    params.require(:item).permit(:name, :description, :price, :image, :inventory)
   end
 end
