@@ -17,8 +17,9 @@
         <p>Inactive</p>
         <%= link_to 'Activate Item', merchant_item_path(item), method: :patch %>
       <% end %>
+      <%= link_to 'Edit Item', edit_merchant_item_path(item), method: :get %>
       <% if item.no_orders? %>
-        <%= button_to 'Delete Item', merchant_item_path(item), method: :delete %>
+        <%= link_to 'Delete Item', merchant_item_path(item), method: :delete %>
       <% end %>
     </section>
   <% end %>
