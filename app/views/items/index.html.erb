@@ -3,8 +3,9 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
-<% if current_merchant? %>
-<p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
+
+<% if @merchant.verify_user_access? %>
+  <p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
 <% end %>
 <section id = "top-5-items">
   <h2>Top 5 Bought Items</h2>
@@ -29,12 +30,12 @@
       <p>Inventory: <%= item.inventory %> </p>
       <% if item.active? %>
         <p>Active</p>
-        <%= link_to 'Deactivate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/deactivate", method: :patch %>
+        <%= link_to 'Deactivate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/deactivate", method: :patch if @merchant.verify_user_access?%>
       <% else %>
         <p>Inactive</p>
-        <%= link_to 'Activate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/activate", method: :patch %>
+        <%= link_to 'Activate Item', "/merchants/#{item.merchant.id}/items/#{item.id}/activate", method: :patch if @merchant.verify_user_access?%>
       <% end %>
-      <% if item.no_orders? && () %>
+      <% if item.no_orders? && @merchant.verify_user_access %>
         <%= link_to 'Delete Item', "/items/#{item.id}" , method: :delete %>
       <% end %>
     </section>
