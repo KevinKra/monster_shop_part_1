@@ -6,14 +6,12 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 
-
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
 		get "/merchants", to: "merchants#show"
 	end
 
 	get '/dashboard/items', to: "items#index"
-
 
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
@@ -68,7 +66,7 @@ Rails.application.routes.draw do
 
 	namespace :merchant do
 		post '/items/new', to: 'items#create'
-		resources :items, only: [:index, :update, :destroy, :new]
+		resources :items, only: [:index, :update, :destroy, :new, :edit]
 	end
 
   get '/welcome/home', to: 'welcome#index'
