@@ -15,8 +15,8 @@ class Merchant::ItemsController < ApplicationController
       flash[:notice] = "Item '#{@item.name}' is now for sale."
       redirect_to '/merchant/items'
     else
-      flash.now[:warning] = @item.errors.full_messages.to_sentence
-      render :new
+      flash[:warning] = @item.errors.full_messages.to_sentence
+      redirect_to '/merchant/items/new'
     end
   end
 
