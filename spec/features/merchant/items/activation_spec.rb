@@ -78,6 +78,23 @@ describe "Merchant can activate and deactivate an item" do
         expect(page).not_to have_link("Deactivate Item")
       end
     end
+
+    it "I can activate an deactive item" do
+      within "#item-#{@shifter.id}" do
+        click_link("Activate Item")
+      end
+
+      expect(current_path).to eq("/merchant/items")
+      within "#main-flash" do
+        expect(page).to have_content("Item '#{@shifter.name}' is now for sale.")
+      end
+
+      within "#item-#{@shifter.id}" do
+        expect(page).to have_content("Active")
+        expect(page).to have_link("Deactivate Item")
+        expect(page).not_to have_link("Activate Item")
+      end
+    end
   end
   describe "Restrict access to certain type of users" do
     after :each do
