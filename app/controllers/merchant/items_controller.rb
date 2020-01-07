@@ -20,6 +20,6 @@ class Merchant::ItemsController < ApplicationController
   private
 
   def require_merchant_access
-    redirect_to 'errors#show' unless current_merchant?
+    render file: "/public/404" unless current_merchant?
   end
 end
