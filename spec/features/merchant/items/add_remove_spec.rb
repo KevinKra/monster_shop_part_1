@@ -31,20 +31,20 @@ describe "Merchant can add and remove an item" do
     end
     it "I see a button to delete the item next to each item that has never been ordered" do
       within "#item-#{@tire.id}" do
-        expect(page).to have_button("Delete Item")
+        expect(page).to have_link("Delete Item")
       end
 
       within "#item-#{@chain.id}" do
-        expect(page).to have_button("Delete Item")
+        expect(page).to have_link("Delete Item")
       end
 
       within "#item-#{@shifter.id}" do
-        expect(page).not_to have_button("Delete Item")
+        expect(page).not_to have_link("Delete Item")
       end
     end
     it "When I click the delete button for an item, the item is deleted and I am returned to the index" do
       within "#item-#{@tire.id}" do
-        click_button("Delete Item")
+        click_link("Delete Item")
         expect(current_path).to eq("/merchant/items")
       end
       within "#main-flash" do
@@ -94,7 +94,7 @@ describe "Merchant can add and remove an item" do
           expect(page).to have_content("Inventory: 1")
           expect(page).to have_link("Deactivate Item")
           expect(page).not_to have_link("Activate Item")
-          expect(page).to have_button("Delete Item")
+          expect(page).to have_link("Delete Item")
         end
       end
       it "When I add valid information but not an Image URL and submit the form, the Item is added" do
@@ -122,7 +122,7 @@ describe "Merchant can add and remove an item" do
           expect(page).to have_content("Inventory: 1")
           expect(page).to have_link("Deactivate Item")
           expect(page).not_to have_link("Activate Item")
-          expect(page).to have_button("Delete Item")
+          expect(page).to have_link("Delete Item")
         end
       end
 
