@@ -12,7 +12,7 @@ class Merchant::ItemsController < ApplicationController
   def create
     @item = current_user.merchant.items.new(item_params)
     if @item.save
-      flash[:notice] = "Item '#{params[:item][:name]}' is now for sale."
+      flash[:notice] = "Item '#{@item.name}' is now for sale."
       redirect_to '/merchant/items'
     else
       flash.now[:warning] = @item.errors.full_messages.to_sentence
@@ -34,7 +34,6 @@ class Merchant::ItemsController < ApplicationController
 
   def destroy
     item = Item.find(params[:id])
-    Review.where(item_id: item.id).destroy_all
     item.destroy
     flash[:notice] = "Item '#{item.name}' has been deleted.'"
     redirect_to "/merchant/items"
