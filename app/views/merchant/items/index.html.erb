@@ -11,7 +11,7 @@
       <p>Inventory: <%= item.inventory %> </p>
       <% if item.active? %>
         <p>Active</p>
-        <%= link_to 'Deactivate Item' %>
+        <%= link_to 'Deactivate Item', "/merchant/items/#{item.id}", method: :patch %>
       <% else %>
         <p>Inactive</p>
         <%= link_to 'Activate Item' %>
