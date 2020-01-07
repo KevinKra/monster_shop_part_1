@@ -7,8 +7,13 @@ class Merchant::ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:item_id])
-    @item.update(active?: false)
-    flash[:notice] = "Item '#{@item.name}' is no longer for sale."
+    if @item.active?
+      @item.update(active?: false)
+      flash[:notice] = "Item '#{@item.name}' is no longer for sale."
+    else
+      @item.update(active?: true)
+      flash[:notice] = "Item '#{@item.name}' is now for sale."
+    end
     redirect_to '/merchant/items'
   end
 
