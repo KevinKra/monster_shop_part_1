@@ -30,7 +30,7 @@ describe "Merchant can edit an item" do
       visit '/merchant/items'
     end
     describe "When I click the edit button for an item" do
-      it "I see a form where I can edit existing information about an item" do
+      it "I can adjust item information then submit the changes" do
         within "#item-#{@tire.id}" do
           click_link 'Edit Item'
         end
@@ -57,6 +57,43 @@ describe "Merchant can edit an item" do
           expect(page).to have_content("Inventory: 5")
           expect(page).to have_link("Deactivate Item")
           expect(page).not_to have_link("Activate Item")
+        end
+      end
+
+      it "I can not delete out validated information" do
+        within "#item-#{@tire.id}" do
+          click_link 'Edit Item'
+        end
+
+        expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
+        fill_in 'Description', with: ""
+        fill_in 'Inventory', with: ""
+        click_on "Update Item"
+
+        expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
+        within "#main-flash" do
+          expect(page).to have_content("Description can't be blank, Inventory can't be blank, and Inventory is not a number")
+        end
+        # OPTIMIZE: add testing that fields are still filled out correctly, this is implemented and tested on development
+      end
+
+      it "I can not adjust inventory or price to non valid input" do
+        within "#item-#{@tire.id}" do
+          click_link 'Edit Item'
+        end
+
+        expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
+        fill_in 'Inventory', with: "-1"
+        fill_in 'Price', with: "0"
+        click_on "Update Item"
+
+        expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
+        within "#main-flash" do
+          expect(page).to have_content("Price must be greater than 0 and Inventory must be greater than or equal to 0")
         end
       end
     end

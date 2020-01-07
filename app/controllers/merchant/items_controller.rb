@@ -30,8 +30,8 @@ class Merchant::ItemsController < ApplicationController
       update_item_info
     else
       update_active_status
+      redirect_to '/merchant/items'
     end
-    redirect_to '/merchant/items'
   end
 
   def destroy
@@ -55,6 +55,7 @@ class Merchant::ItemsController < ApplicationController
     @item.update(item_params)
     if @item.save
       flash[:notice] = "Item '#{@item.name}' has been updated."
+      redirect_to '/merchant/items'
     else
       flash[:notice] = @item.errors.full_messages.to_sentence
       redirect_to "/merchant/items/#{@item.id}/edit"
