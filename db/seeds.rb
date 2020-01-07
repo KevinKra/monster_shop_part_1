@@ -64,19 +64,19 @@ pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
 #orders
-order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_1.id)
-order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_2.id)
+order_1 = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_1.id)
+order_2 = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_2.id)
 
 #itemorders
-ItemOrder.create!(order_id: order.id, item_id: tire.id, price: 100, quantity: 1)
-ItemOrder.create!(order_id: order.id, item_id: tire_2.id, price: 100, quantity: 3)
-ItemOrder.create!(order_id: order.id, item_id: tire_3.id, price: 100, quantity: 8)
-ItemOrder.create!(order_id: order.id, item_id: tire_4.id, price: 100, quantity: 7)
-ItemOrder.create!(order_id: order.id, item_id: tire_5.id, price: 100, quantity: 4)
-ItemOrder.create!(order_id: order.id, item_id: tire_6.id, price: 100, quantity: 5)
-ItemOrder.create!(order_id: order.id, item_id: tire_7.id, price: 100, quantity: 14)
-ItemOrder.create!(order_id: order.id, item_id: tire_8.id, price: 100, quantity: 5)
-ItemOrder.create!(order_id: order.id, item_id: tire_9.id, price: 100, quantity: 21)
-ItemOrder.create!(order_id: order.id, item_id: tire_10.id, price: 100, quantity: 1)
+ItemOrder.create!(order_id: order_1.id, item_id: tire.id, price: 100, quantity: 1)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_2.id, price: 100, quantity: 3)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_3.id, price: 100, quantity: 8)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_4.id, price: 100, quantity: 7)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_5.id, price: 100, quantity: 4)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_6.id, price: 100, quantity: 5)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_7.id, price: 100, quantity: 14)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_8.id, price: 100, quantity: 5)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_9.id, price: 100, quantity: 21)
+ItemOrder.create!(order_id: order_1.id, item_id: tire_10.id, price: 100, quantity: 1)
 
 bike_shop.users << [merchant]
