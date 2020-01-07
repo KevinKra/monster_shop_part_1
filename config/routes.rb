@@ -6,10 +6,14 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 	end
 
+
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
 		get "/merchants", to: "merchants#show"
 	end
+
+	get '/dashboard/items', to: "items#index"
+
 
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
@@ -62,6 +66,10 @@ Rails.application.routes.draw do
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+	namespace :merchant do
+		get "/", to: "dashboard#show"
+		get "/items", to: "items#index"
+	end
 
   get '/welcome/home', to: 'welcome#index'
 	# via: :all includes all Restful verbs
