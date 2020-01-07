@@ -6,7 +6,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
     if @item.active?
       @item.update(active?: false)
       flash[:notice] = "Item '#{@item.name}' is no longer for sale."
@@ -20,6 +20,6 @@ class Merchant::ItemsController < ApplicationController
   private
 
   def require_merchant_access
-    render file: "/public/404" unless current_merchant?
+    redirect_to 'errors#show' unless current_merchant?
   end
 end

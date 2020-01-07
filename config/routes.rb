@@ -67,8 +67,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
 
 	namespace :merchant do
-		get "/items", to: "items#index"
-		patch "/items/:item_id", to: "items#update"
+		resources :items, only: [:index, :update]
 	end
 
   get '/welcome/home', to: 'welcome#index'
