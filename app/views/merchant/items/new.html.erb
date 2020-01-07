@@ -1,7 +1,7 @@
 <h1>Merchant Items New View</h1>
 
 <section id="merchant-add-item-form">
-  <%= form_for @item do |f| %>
+  <%= form_for @item, url: merchant_items_path do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
     <%= f.label :description %>
