@@ -21,14 +21,14 @@ describe 'As an admin' do
 			expect(current_path).to eq("/admin/merchants")
 
 			expect(page).to have_content(@megs_bikes.name)
-			expect(page).to have_content(@megs_bikes.address)
 			expect(page).to have_content(@megs_bikes.city)
+			expect(page).to have_content(@megs_bikes.state)
 			expect(page).to have_content(@mikes_tatoos.name)
-			expect(page).to have_content(@mikes_tatoos.address)
 			expect(page).to have_content(@mikes_tatoos.city)
+			expect(page).to have_content(@mikes_tatoos.state)
 			expect(page).to have_content(@sals_salads.name)
-			expect(page).to have_content(@sals_salads.address)
 			expect(page).to have_content(@sals_salads.city)
+			expect(page).to have_content(@sals_salads.state)
 		end
 	end
 end
