@@ -52,7 +52,7 @@ RSpec.describe "As an admin user" do
       end
     end
 
-    it 'I can ship a packaged order' do
+    xit 'I can ship a packaged order' do
       within "#admin-order-#{@order.id}" do
         click_on "Ship Order"
       end
