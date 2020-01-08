@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 		get "/merchants/:id/edit", to: 'merchants#edit'
 		patch "/merchants/:id", to: 'merchants#update'
 		get "/users", to: 'users#index'
+		get "/users/:id", to: 'users#profile'
 	end
 
 	get '/dashboard/items', to: "items#index"

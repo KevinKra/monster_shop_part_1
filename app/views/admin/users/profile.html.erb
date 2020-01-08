@@ -1,0 +1,14 @@
+<h2>Hello,<%=@user.name%>!</h2>
+<%= @user.street_address %>
+<%= @user.city %>
+<%= @user.state %>
+<%= @user.zip %>
+<%= @user.email %>
+<%= @user.created_at %>
+<%= @user.role %> 
+
+
+<section class="user-dashboard">
+  <h2>User Profile</h2>
+  <%= link_to "My Orders", "/profile/orders" if @user.has_orders? %>
+</section>
