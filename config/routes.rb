@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 		get "/merchants", to: "merchants#show"
 	end
 
+	get '/dashboard/items', to: "items#index"
+
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -62,6 +64,10 @@ Rails.application.routes.draw do
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+	namespace :merchant do
+		post '/items/new', to: 'items#create'
+		resources :items, only: [:index, :update, :destroy, :new, :edit]
+	end
 
   get '/welcome/home', to: 'welcome#index'
 	# via: :all includes all Restful verbs

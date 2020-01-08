@@ -1,0 +1,26 @@
+<h1>Merchant Items Index View</h1>
+<h2> <%= link_to current_user.merchant.name, merchant_items_path %> </h2>
+<%= button_to 'Add New Item', new_merchant_item_path, method: :get %>
+<section class="grid-container">
+  <% @items.each do |item| %>
+    <section class = "grid-item" id= 'item-<%=item.id%>'>
+      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
+      <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
+      <%= link_to image_tag(item.image), "/items/#{item.id}", :id => "image-link-#{item.id}" %>
+      <p> <%= item.description %></p>
+      <p>Price: <%=number_to_currency(item.price) %> </p>
+      <p>Inventory: <%= item.inventory %> </p>
+      <% if item.active? %>
+        <p>Active</p>
+        <%= link_to 'Deactivate Item', merchant_item_path(item), method: :patch %>
+      <% else %>
+        <p>Inactive</p>
+        <%= link_to 'Activate Item', merchant_item_path(item), method: :patch %>
+      <% end %>
+      <%= link_to 'Edit Item', edit_merchant_item_path(item), method: :get %>
+      <% if item.no_orders? %>
+        <%= link_to 'Delete Item', merchant_item_path(item), method: :delete %>
+      <% end %>
+    </section>
+  <% end %>
+</section>
