@@ -8,9 +8,11 @@ Rails.application.routes.draw do
 
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
-		get "/merchants", to: "merchants#show"
+		get "/merchants", to: "merchants#index"
+		patch "/merchants/:id", to: "merchants#update"
 	end
 
+  # merchants
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
   patch "/merchants/:id", to: "merchants#update"
   delete "/merchants/:id", to: "merchants#destroy"
 
+  # items
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
@@ -31,38 +34,46 @@ Rails.application.routes.draw do
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
 
+  # review
   get "/reviews/:id/edit", to: "reviews#edit"
   patch "/reviews/:id", to: "reviews#update"
   delete "/reviews/:id", to: "reviews#destroy"
 
+  # cart
   get "/cart", to: "cart#show"
 	patch "/cart/:item_id/:quantity", to: "cart#edit_quantity"
 	post "/cart/:item_id", to: "cart#add_item"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
+  # orders
   get "/orders/new", to: "orders#new"
   get "/orders/:id", to: "orders#show"
 	patch "/orders/:id/:status", to: "orders#update"
 	get "/profile/orders", to: 'orders#index'
 	get "/profile/orders/:id", to: "orders#show"
 	patch "/profile/orders/:id", to: "orders#update"
-	post "/profile/orders", to: "orders#create"
-
+  post "/profile/orders", to: "orders#create"
+  
+  # registration
 	get "/register", to: 'users#new'
-	get "/users", to: 'users#index'
+  post "/register", to: 'users#create'
+
+  # user
+  get "/users", to: 'users#index'
 	resources :users, only: [:edit, :update]
   get "/profile", to: 'users#show'
-  post "/register", to: 'users#create'
-  get "/profile/edit_password", to: 'users#edit_password'
 
+  # user - password
+  get "/profile/edit_password", to: 'users#edit_password'
   patch "/profile", to: 'users#update_password'
 
+  # sessions
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
-
+  # general
   get '/welcome/home', to: 'welcome#index'
 	# via: :all includes all Restful verbs
 	match '*path' => 'errors#show', via: :all
