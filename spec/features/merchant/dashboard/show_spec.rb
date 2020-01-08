@@ -6,12 +6,6 @@ RSpec.describe "As a merchant user" do
 		@merchant_company = Merchant.create!(name:"Meg's Bike Shop", address: "1234 Bike cr.", city:"Denver", state: "Colorado", zip: 80221)
 		@merchant_company.users << merchant
 
-    # visit "/login"
-    #
-    # fill_in :email, with: merchant.email
-    # fill_in :password, with: merchant.password
-    #
-    # click_on "Sign In"
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
     visit '/merchant/dashboard'
   }
