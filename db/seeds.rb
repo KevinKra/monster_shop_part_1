@@ -1,3 +1,6 @@
+Item.destroy_all
+Order.destroy_all
+ItemOrder.destroy_all
 Merchant.destroy_all
 User.destroy_all
 
@@ -18,23 +21,27 @@ tire_9 = bike_shop.items.create!(name: "Gatorskins-9", description: "I am number
 tire_10 = bike_shop.items.create!(name: "Gatorskins-10", description: "I am number 9", price: 900, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 21)
 
 #dog_shop items
-pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+pull_toy = dog_shop.items.create!(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+dog_bone = dog_shop.items.create!(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
 #orders
 order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
+order_2 = Order.create!(name: "Carley's Order", address: "33323", city: "Normal", state: "illinois", zip: "71204")
 
 #itemorders
-ItemOrder.create!(order_id: order.id, item_id: tire.id, price: 100, quantity: 1)
-ItemOrder.create!(order_id: order.id, item_id: tire_2.id, price: 100, quantity: 3)
-ItemOrder.create!(order_id: order.id, item_id: tire_3.id, price: 100, quantity: 8)
-ItemOrder.create!(order_id: order.id, item_id: tire_4.id, price: 100, quantity: 7)
-ItemOrder.create!(order_id: order.id, item_id: tire_5.id, price: 100, quantity: 4)
-ItemOrder.create!(order_id: order.id, item_id: tire_6.id, price: 100, quantity: 5)
-ItemOrder.create!(order_id: order.id, item_id: tire_7.id, price: 100, quantity: 14)
-ItemOrder.create!(order_id: order.id, item_id: tire_8.id, price: 100, quantity: 5)
-ItemOrder.create!(order_id: order.id, item_id: tire_9.id, price: 100, quantity: 21)
-ItemOrder.create!(order_id: order.id, item_id: tire_10.id, price: 100, quantity: 1)
+ItemOrder.create!(order_id: order.id, item_id: tire.id, price: tire.price, quantity: 1)
+ItemOrder.create!(order_id: order_2.id, item_id: tire.id, price: tire.price, quantity: 1)
+ItemOrder.create!(order_id: order.id, item_id: tire_2.id, price: tire_2.price, quantity: 3)
+ItemOrder.create!(order_id: order.id, item_id: tire_3.id, price: tire_3.price, quantity: 8)
+ItemOrder.create!(order_id: order.id, item_id: tire_4.id, price: tire_4.price, quantity: 7)
+ItemOrder.create!(order_id: order_2.id, item_id: tire_4.id, price: tire_4.price, quantity: 7)
+ItemOrder.create!(order_id: order_2.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 7)
+ItemOrder.create!(order_id: order.id, item_id: tire_5.id, price: tire_5.price, quantity: 4)
+ItemOrder.create!(order_id: order.id, item_id: pull_toy.id, price: pull_toy.price, quantity: 5)
+ItemOrder.create!(order_id: order.id, item_id: tire_7.id, price: tire_7.price, quantity: 14)
+ItemOrder.create!(order_id: order.id, item_id: tire_8.id, price: tire_8.price, quantity: 5)
+ItemOrder.create!(order_id: order.id, item_id: dog_bone.id, price: dog_bone.price, quantity: 21)
+ItemOrder.create!(order_id: order.id, item_id: tire_10.id, price: tire_10.price, quantity: 1)
 
 user = User.create(
   name:  Faker::Name.first_name,
