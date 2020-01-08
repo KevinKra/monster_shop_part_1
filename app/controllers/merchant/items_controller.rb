@@ -1,6 +1,4 @@
-class Merchant::ItemsController < ApplicationController
-  before_action :require_merchant_access
-
+class Merchant::ItemsController < Merchant::BaseController
   def index
     @items = Item.where(merchant_id: current_user.merchant.id)
   end
@@ -42,10 +40,6 @@ class Merchant::ItemsController < ApplicationController
   end
 
   private
-
-  def require_merchant_access
-    render file: "/public/404" unless current_merchant?
-  end
 
   def item_params
     params.require(:item).permit(:name, :description, :price, :image, :inventory)
