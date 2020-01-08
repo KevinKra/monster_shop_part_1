@@ -30,5 +30,28 @@ describe 'As an admin' do
 			expect(page).to have_content(@sals_salads.city)
 			expect(page).to have_content(@sals_salads.state)
 		end
+
+		it "There is a disable button next to all enabled merchants." do
+
+		visit "/admin/merchants"
+
+		expect(current_path).to eq("/admin/merchants")
+
+		expect(page).to have_button("Disable")
+
+		within "#merchant-#{@mikes_tatoos.id}" do
+			click_on "Disable"
+		end
+
+		expect(current_path).to eq("/admin/merchants")
+		within "#main-flash" do
+			expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer for active.")
+		end
+
+		within "#merchant-#{@mikes_tatoos.id}" do
+			expect(page).to have_link("Enable")
+			expect(page).not_to have_link("Disable")
+			end
+		end
 	end
 end
