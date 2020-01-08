@@ -48,11 +48,4 @@ RSpec.describe 'merchant#index', type: :feature do
     end
 
   end
-
-  # context "As an admin" do
-  #   before {
-
-  #   }
-  # end
-
 end
