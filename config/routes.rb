@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 	namespace :merchant do
 		post '/items/new', to: 'items#create'
 		resources :items, only: [:index, :update, :destroy, :new, :edit]
-		get "/", to: 'dashboard#show'
+		get "/dashboard", to: 'dashboard#show'
 	end
 
   get '/welcome/home', to: 'welcome#index'
