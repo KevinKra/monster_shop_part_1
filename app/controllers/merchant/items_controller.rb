@@ -78,5 +78,4 @@ class Merchant::ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-
 end
