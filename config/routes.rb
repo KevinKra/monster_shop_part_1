@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
+		get "/merchants", to: 'merchants#index'
 	end
 
 	get '/dashboard/items', to: "items#index"
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
   post "/merchants", to: "merchants#create"
   get "/merchants/:id/edit", to: "merchants#edit"
   patch "/merchants/:id", to: "merchants#update"
-	get "/admin/merchants", to: "merchants#index"
   delete "/merchants/:id", to: "merchants#destroy"
 
   get "/items", to: "items#index"
