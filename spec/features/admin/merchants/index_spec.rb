@@ -45,12 +45,12 @@ describe 'As an admin' do
 
 		expect(current_path).to eq("/admin/merchants")
 		within "#main-flash" do
-			expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer for active.")
+			expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
 		end
 
 		within "#merchant-#{@mikes_tatoos.id}" do
-			expect(page).to have_link("Enable")
-			expect(page).not_to have_link("Disable")
+			expect(page).to have_button("Enable")
+			expect(page).not_to have_button("Disable")
 			end
 		end
 	end
