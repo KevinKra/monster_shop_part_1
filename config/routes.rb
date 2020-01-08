@@ -2,10 +2,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 	get "/", to: "welcome#index"
 
-	namespace :merchants do
-		get "/dashboard", to: 'dashboard#show'
-	end
-
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
 		get "/merchants", to: "merchants#show"
@@ -67,6 +63,7 @@ Rails.application.routes.draw do
 	namespace :merchant do
 		post '/items/new', to: 'items#create'
 		resources :items, only: [:index, :update, :destroy, :new, :edit]
+		get "/", to: 'dashboard#show'
 	end
 
   get '/welcome/home', to: 'welcome#index'

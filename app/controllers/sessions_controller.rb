@@ -4,7 +4,7 @@
       redirect_to "/admin/dashboard"
       flash[:notice] = "You are already logged in."
     elsif current_merchant?
-      redirect_to "/merchants/dashboard"
+      redirect_to "/merchant/dashboard"
       flash[:notice] = "You are already logged in."
     elsif current_default?
       redirect_to "/profile"
@@ -21,7 +21,7 @@
         redirect_to '/admin/dashboard'
         flash[:success] = "Welcome, #{user.name}. You are logged in as an Admin."
       elsif user.merchant?
-        redirect_to '/merchants/dashboard'
+        redirect_to '/merchant/dashboard'
         flash[:success] = "Welcome, #{user.name}. You are logged in as a Merchant."
       elsif user.default?
         redirect_to '/profile'
