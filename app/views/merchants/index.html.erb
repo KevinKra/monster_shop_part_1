@@ -4,6 +4,8 @@
   <% @merchants.each do |merchant|%>
     <section class = "grid-item">
       <h2><%=link_to merchant.name, "/merchants/#{merchant.id}"%></h2>
+			<%= merchant.address %>
+			<%= merchant.city %> 
     </section>
   <% end %>
 </section>
