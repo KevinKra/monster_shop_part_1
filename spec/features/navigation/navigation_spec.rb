@@ -33,7 +33,7 @@ RSpec.describe 'Site Navigation' do
           expect(page).to have_content("Error 404: You don't have access to this section.")
 
           visit '/merchant'
-          expect(page).to have_content("The page you were looking for doesn't exist (404)")
+          expect(page).to have_content("Error 404: You don't have access to this section")
 
           visit '/admin'
           expect(page).to have_content("Error 404: You don't have access to this section.")
@@ -82,7 +82,7 @@ RSpec.describe 'Site Navigation' do
         describe "When I try to access any path that begins with /merchant or /admin" do
           it "I see a 404 error" do
             visit '/merchant'
-            expect(page).to have_content("The page you were looking for doesn't exist (404)")
+            expect(page).to have_content("Error 404: You don't have access to this section")
 
             visit '/admin'
             expect(page).to have_content("Error 404: You don't have access to this section.")
@@ -147,7 +147,7 @@ RSpec.describe 'Site Navigation' do
         describe "When I try to access any path that begins with /merchant, /cart" do
           it "I see a 404 error for /merchant" do
             visit '/merchant'
-            expect(page).to have_content("The page you were looking for doesn't exist (404)")
+            expect(page).to have_content("Error 404: You don't have access to this section")
           end
 
           it "I see a 404 error for /cart" do

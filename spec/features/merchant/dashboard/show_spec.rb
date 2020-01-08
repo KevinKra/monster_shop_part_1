@@ -13,7 +13,7 @@ RSpec.describe "As a merchant user" do
     #
     # click_on "Sign In"
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
-    visit '/merchant'
+    visit '/merchant/dashboard'
   }
 
   context 'when I visit my dashboard' do
