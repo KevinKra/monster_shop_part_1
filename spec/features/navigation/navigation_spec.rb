@@ -101,7 +101,7 @@ RSpec.describe 'Site Navigation' do
         }
 
         it 'should include a link to the merchant dashboard' do
-          expect(page).to have_link("Merchant Dashboard", href: "/merchants/dashboard")
+          expect(page).to have_link("Merchant Dashboard", href: "/merchant/dashboard")
         end
 
         it 'should display a cart button' do
