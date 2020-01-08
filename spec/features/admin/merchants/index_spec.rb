@@ -53,5 +53,47 @@ describe 'As an admin' do
 			expect(page).not_to have_button("Disable")
 			end
 		end
+
+		it "There is a enable button next to all disabled merchants." do
+
+			visit "/admin/merchants"
+
+			expect(current_path).to eq("/admin/merchants")
+
+			expect(page).to have_button("Disable")
+
+			within "#merchant-#{@mikes_tatoos.id}" do
+				click_on "Disable"
+			end
+
+			expect(current_path).to eq("/admin/merchants")
+			within "#main-flash" do
+				expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
+			end
+
+			within "#merchant-#{@mikes_tatoos.id}" do
+				expect(page).to have_button("Enable")
+				expect(page).not_to have_button("Disable")
+				end
+
+			expect(current_path).to eq("/admin/merchants")
+
+			expect(page).to have_button("Enable")
+
+			within "#merchant-#{@mikes_tatoos.id}" do
+				click_on "Enable"
+			end
+
+			expect(current_path).to eq("/admin/merchants")
+			within "#main-flash" do
+				expect(page).to_not have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
+				expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is now active.")
+			end
+
+			within "#merchant-#{@mikes_tatoos.id}" do
+				expect(page).to_not have_button("Enable")
+				expect(page).to have_button("Disable")
+			end
+		end
 	end
 end
