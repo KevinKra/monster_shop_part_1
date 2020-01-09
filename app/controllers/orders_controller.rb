@@ -1,4 +1,4 @@
-class OrdersController <ApplicationController
+class OrdersController < ApplicationController
 
   def new
   end
@@ -25,7 +25,7 @@ class OrdersController <ApplicationController
   end
 
   def create
-    order = current_user.orders.create
+    order = current_user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
     cart.items.each do |item,quantity|
       order.item_orders.create({
         item: item,

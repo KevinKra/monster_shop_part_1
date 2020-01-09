@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "As a merchant user" do
+  let!(:user) { create(:user, :default_user) }
   let!(:merchant) { create(:user, :merchant_user) }
 
   describe 'when I visit my dashboard' do
@@ -35,18 +36,18 @@ RSpec.describe "As a merchant user" do
     paper = merchant_company.items.create!(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
 
     # tire and paper should be visible
-    ryan_order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
+    ryan_order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user: user)
     item_order_1 = ItemOrder.create!(order_id: ryan_order.id, item_id: tire.id, price: tire.price, quantity: 3)
     item_order_2 = ItemOrder.create!(order_id: ryan_order.id, item_id: paper.id, price: paper.price, quantity: 1)
     item_order_3 = ItemOrder.create!(order_id: ryan_order.id, item_id: pencil.id, price: pencil.price, quantity: 2)
 
     # tire should be visible
-    carley_order = Order.create!(name: "Carley's Order", address: "33323", city: "Normal", state: "illinois", zip: "71204")
+    carley_order = Order.create!(name: "Carley's Order", address: "33323", city: "Normal", state: "illinois", zip: "71204", user: user)
     item_order_4 = ItemOrder.create!(order_id: carley_order.id, item_id: tire.id, price: tire.price, quantity: 1)
     item_order_5 = ItemOrder.create!(order_id: carley_order.id, item_id: pencil.id, price: pencil.price, quantity: 3)
 
     # order should not show
-    dalton_order = Order.create!(name: "Dalton's Order", address: "9921", city: "Denver", state: "Colorado", zip: "80204")
+    dalton_order = Order.create!(name: "Dalton's Order", address: "9921", city: "Denver", state: "Colorado", zip: "80204", user: user)
     item_order_6 = ItemOrder.create!(order_id: dalton_order.id, item_id: pencil.id, price: pencil.price, quantity: 1)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)

@@ -1,99 +1,75 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'As an admin' do
-	describe 'when I visit the merchants index page' do
-		before :each do
-			@ryan = User.create!(name: "Ryan", street_address: "1256 Lucky st.", city: "Arvada", state: "Co.", zip: 80234, email: "admin@gmail.com", password: "admin", role: 1)
-			@megs_bikes = Merchant.create!(name:"Meg's Bike Shop", address:"1234 Fake st.", city: "Denver", state: "Co.", zip:80230)
-			@mikes_tatoos = Merchant.create!(name:"Mike's Tatoos", address:"9088 Fake st.", city: "Denver", state: "Co.", zip:80230)
-			@sals_salads = Merchant.create!(name:"Sal's Salads", address:"7856 Fake st.", city: "Denver", state: "Co.", zip:80230)
-			@megs_bikes.users << [@ryan]
-			@mikes_tatoos.users << [@ryan]
-			@sals_salads.users << [@ryan]
+RSpec.describe "admin/merchants#index" do
+  let!(:admin) { create(:user, :admin_user) }
+  let!(:merchant) { create_list(:merchant, 3) }
 
-			allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@ryan)
-		end
+  before {
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+    @merchant_1, @merchant_2 = create_list(:merchant, 2)
+    create_list(:item, 3, merchant_id: @merchant_1.id) 
+    visit "/admin/merchants"
+  }
 
-		it 'I see a list of all the merchants name, city and state' do
+  context "as an admin visiting the merchants page" do
+    it "admin should see a 'disable' button next to any merchants who are not yet disabled" do
+      expect(current_path).to eq("/admin/merchants")
+      within("#merchant-#{@merchant_1.id}") do
+        expect(page).to have_content("Disable")
+      end
+    end
 
-			visit "/admin/merchants"
+    it "when the admin clicks the 'disable' button, they are returned to the admin's merchant index page" do
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Disable"
+      end
 
-			expect(current_path).to eq("/admin/merchants")
+      expect(current_path).to eq("/admin/merchants")
 
-			expect(page).to have_content(@megs_bikes.name)
-			expect(page).to have_content(@megs_bikes.city)
-			expect(page).to have_content(@megs_bikes.state)
-			expect(page).to have_content(@mikes_tatoos.name)
-			expect(page).to have_content(@mikes_tatoos.city)
-			expect(page).to have_content(@mikes_tatoos.state)
-			expect(page).to have_content(@sals_salads.name)
-			expect(page).to have_content(@sals_salads.city)
-			expect(page).to have_content(@sals_salads.state)
-		end
+      within("#merchant-#{@merchant_1.id}") do
+        expect(page).to have_content("Enable")
+      end
+    end
 
-		it "There is a disable button next to all enabled merchants." do
+    it "the admin sees a flash message that the merchant's account is disabled/enabled" do
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Disable"
+      end
+      
+      expect(current_path).to eq("/admin/merchants")
+      expect(page).to have_content("#{@merchant_1.name} is now Disabled")
 
-		visit "/admin/merchants"
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Enable"
+      end
 
-		expect(current_path).to eq("/admin/merchants")
+      expect(current_path).to eq("/admin/merchants")
+      expect(page).to have_content("#{@merchant_1.name} is now Enabled")
+    end
 
-		expect(page).to have_button("Disable")
+    it "when an admin disables a merchant, all their associated items are deactivated" do
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Disable"
+      end
 
-		within "#merchant-#{@mikes_tatoos.id}" do
-			click_on "Disable"
-		end
+      visit "/merchants/#{@merchant_1.id}/items"
 
-		expect(current_path).to eq("/admin/merchants")
-		within "#main-flash" do
-			expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
-		end
+      @merchant_1.items.each do |item|
+        expect(item.active?).to eq(false)
+      end
 
-		within "#merchant-#{@mikes_tatoos.id}" do
-			expect(page).to have_button("Enable")
-			expect(page).not_to have_button("Disable")
-			end
-		end
+      visit "/admin/merchants"
 
-		it "There is a enable button next to all disabled merchants." do
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Enable"
+      end
 
-			visit "/admin/merchants"
+      visit "/merchants/#{@merchant_1.id}/items"
 
-			expect(current_path).to eq("/admin/merchants")
+      @merchant_1.reload.items.each do |item|
+        expect(item.active?).to eq(true)
+      end
 
-			expect(page).to have_button("Disable")
-
-			within "#merchant-#{@mikes_tatoos.id}" do
-				click_on "Disable"
-			end
-
-			expect(current_path).to eq("/admin/merchants")
-			within "#main-flash" do
-				expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
-			end
-
-			within "#merchant-#{@mikes_tatoos.id}" do
-				expect(page).to have_button("Enable")
-				expect(page).not_to have_button("Disable")
-				end
-
-			expect(current_path).to eq("/admin/merchants")
-
-			expect(page).to have_button("Enable")
-
-			within "#merchant-#{@mikes_tatoos.id}" do
-				click_on "Enable"
-			end
-
-			expect(current_path).to eq("/admin/merchants")
-			within "#main-flash" do
-				expect(page).to_not have_content("Merchant '#{@mikes_tatoos.name}' is no longer active.")
-				expect(page).to have_content("Merchant '#{@mikes_tatoos.name}' is now active.")
-			end
-
-			within "#merchant-#{@mikes_tatoos.id}" do
-				expect(page).to_not have_button("Enable")
-				expect(page).to have_button("Disable")
-			end
-		end
-	end
+    end
+  end
 end

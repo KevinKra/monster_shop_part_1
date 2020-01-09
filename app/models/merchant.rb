@@ -2,15 +2,17 @@ class Merchant <ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
 	has_many :users
+
   has_many :orders, through: :item_orders
+
 
   validates_presence_of :name,
                         :address,
                         :city,
                         :state,
                         :zip
-	validates_inclusion_of :able?, :in => [true, false]
-
+    
+  validates :disabled,  :inclusion => { :in => [true, false] }
 
   def no_orders?
     item_orders.empty?

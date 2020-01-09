@@ -12,7 +12,7 @@ describe "As an Administrator" do
 			allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@ryan)
 		end
 
-		it "I can see everything the user can see but I cannot update their infromation." do
+		it "I can see everything the user can see but I cannot update their information." do
 
 			visit "/admin/users/#{@alex.id}"
 

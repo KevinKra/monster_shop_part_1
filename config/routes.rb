@@ -3,14 +3,14 @@ Rails.application.routes.draw do
 	get "/", to: "welcome#index"
 
 	namespace :admin do
-		get "/dashboard", to: 'dashboard#show'
-		get "/merchants", to: 'merchants#index'
-		get "/merchants/:id", to: 'merchants#show'
-		get "/merchants/:id/edit", to: 'merchants#edit'
-		patch "/merchants/:id", to: 'merchants#update'
-		get "/users", to: 'users#index'
-		get "/users/:id", to: 'users#profile'
-	end
+    get "/dashboard", to: 'dashboard#show'
+    get "/merchants", to: 'merchants#index'
+    get "/merchants/:id", to: 'merchants#show'
+    get "/merchants/:id/edit", to: 'merchants#edit'
+    patch "/merchants/:id", to: 'merchants#update'
+    get "/users", to: 'users#index'
+    get "/users/:id", to: 'users#profile'
+  end
 
 	get '/dashboard/items', to: "items#index"
 
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
 	resources :reviews, only: [:edit, :update, :destroy]
 
+  # cart
   get "/cart", to: "cart#show"
 	patch "/cart/:item_id/:quantity", to: "cart#edit_quantity"
 	post "/cart/:item_id", to: "cart#add_item"
@@ -35,24 +36,31 @@ Rails.application.routes.draw do
 
 	resources :orders, only: [:new, :show]
 
+  # orders
 	patch "/orders/:id/:status", to: "orders#update"
 	get "/profile/orders", to: 'orders#index'
 	get "/profile/orders/:id", to: "orders#show"
 	patch "/profile/orders/:id", to: "orders#update"
-	post "/profile/orders", to: "orders#create"
-
+  post "/profile/orders", to: "orders#create"
+  
+  # registration
 	get "/register", to: 'users#new'
-	get "/users", to: 'users#index'
+  post "/register", to: 'users#create'
+
+  # user
+  get "/users", to: 'users#index'
 	resources :users, only: [:edit, :update]
   get "/profile", to: 'users#show'
-  post "/register", to: 'users#create'
-  get "/profile/edit_password", to: 'users#edit_password'
 
+  # user - password
+  get "/profile/edit_password", to: 'users#edit_password'
   patch "/profile", to: 'users#update_password'
 
+  # sessions
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
+
 
 	namespace :merchant do
 		post '/items/new', to: 'items#create'
