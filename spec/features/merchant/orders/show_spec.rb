@@ -67,6 +67,7 @@ describe "Merchant can view order show page for only that merchant's items" do
 
         within "#merchant-item-order-#{@item_order_2.id}" do
           expect(page).not_to have_link("Fulfill Item")
+          expect(page).to have_content("Status: Not enough quantity available")
         end
 
         within "#merchant-item-order-#{@item_order_1.id}" do
