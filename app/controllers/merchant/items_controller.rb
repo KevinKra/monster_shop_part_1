@@ -1,6 +1,4 @@
-class Merchant::ItemsController < ApplicationController
-  before_action :require_merchant_access
-
+class Merchant::ItemsController < Merchant::BaseController
   def index
     @items = Item.where(merchant_id: current_user.merchant.id)
   end
@@ -67,8 +65,6 @@ class Merchant::ItemsController < ApplicationController
       flash[:notice] = "Item '#{@item.name}' is now for sale."
     end
   end
-
-  private
 
   def item_params
     params.require(:item).permit(:name, :description, :price, :image, :inventory)   #moved into private
