@@ -54,44 +54,18 @@ RSpec.describe "As a merchant user" do
 
     within "#merchant-orders-index-#{ryan_order.id}" do
       expect(page).to have_link("ORDER LINK(ID): #{ryan_order.id}")
-      # OPTIMIZE: need to add below functionality
-      # expect(page).to have_content("Created at: Date")
-      # expect(page).to have_content("Quantity: 4")
-      # expect(page).to have_content("Grand Total: 4 times cost of each item")
-
-      # expect(page).to have_content(ryan_order.name)
-      # expect(page).to have_content(ryan_order.address)
-      # expect(page).to have_content(ryan_order.city)
-      # expect(page).to have_content(ryan_order.state)
-      # expect(page).to have_content(ryan_order.zip)
-      #
-      # expect(page).to have_content(tire.name)
-      # # OPTIMIZE: add test for image source
-      # expect(page).to have_content(item_order_1.price)
-      # expect(page).to have_content(item_order_1.quantity)
-      #
-      # expect(page).to have_content(paper.name)
-      # # OPTIMIZE: add test for image source
-      # expect(page).to have_content(item_order_2.price)
-      # expect(page).to have_content(item_order_2.quantity)
+      expect(page).to have_content("Created at: 2020-01-09")
+      expect(page).to have_content("Quantity: 4")
+      expect(page).to have_content("Total Price: $320.00")
     end
 
     within "#merchant-orders-index-#{carley_order.id}" do
       expect(page).to have_link("ORDER LINK(ID): #{carley_order.id}")
-
-      # expect(page).to have_content(carley_order.name)
-      # expect(page).to have_content(carley_order.address)
-      # expect(page).to have_content(carley_order.city)
-      # expect(page).to have_content(carley_order.state)
-      # expect(page).to have_content(carley_order.zip)
-      #
-      # expect(page).to have_content(tire.name)
-      # # OPTIMIZE: add test for image source
-      # expect(page).to have_content(item_order_4.price)
-      # expect(page).to have_content(item_order_4.quantity)
+      expect(page).to have_content("Created at: 2020-01-09")
+      expect(page).to have_content("Quantity: 1")
+      expect(page).to have_content("Total Price: $100.00")
     end
 
-    # expect(page).not_to have_content(pencil.name)
     expect(page).not_to have_css("merchant-orders-index-#{dalton_order.id}")
     expect(page).not_to have_link("ORDER LINK(ID): #{dalton_order.id}")
   end
