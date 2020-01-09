@@ -1,6 +1,7 @@
 class Merchant::DashboardController < Merchant::BaseController
 
   def show
-		@merchant = current_user.merchant
+    merchant = Merchant.find(current_user.merchant.id)
+    @orders = merchant.orders.all.distinct
   end
 end
