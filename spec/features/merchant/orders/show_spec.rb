@@ -17,7 +17,7 @@ describe "Merchant can view order show page for only that merchant's items" do
       # @tire and @paper should be visible
       @ryan_order = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554")
       @item_order_1 = ItemOrder.create!(order_id: @ryan_order.id, item_id: @tire.id, price: @tire.price, quantity: 3)
-      @item_order_2 = ItemOrder.create!(order_id: @ryan_order.id, item_id: @paper.id, price: @paper.price, quantity: 1)
+      @item_order_2 = ItemOrder.create!(order_id: @ryan_order.id, item_id: @paper.id, price: @paper.price, quantity: 4)
       @item_order_3 = ItemOrder.create!(order_id: @ryan_order.id, item_id: @pencil.id, price: @pencil.price, quantity: 2)
 
       # @tire should be visible
@@ -46,13 +46,13 @@ describe "Merchant can view order show page for only that merchant's items" do
         expect(page).to have_content(@ryan_order.state)
         expect(page).to have_content(@ryan_order.zip)
 
-        within "#merchant-item-order-#{@tire.id}" do
+        within "#merchant-item-order-#{@item_order_1.id}" do
           expect(page).to have_link(@tire.name)
           expect(page).to have_css("img[src*='#{@tire.image}']")
           expect(page).to have_content("Price: $#{@item_order_1.price}")
           expect(page).to have_content("Quantity: #{@item_order_1.quantity}")
         end
-        within "#merchant-item-order-#{@paper.id}" do
+        within "#merchant-item-order-#{@item_order_2.id}" do
           expect(page).to have_link(@paper.name)
           expect(page).to have_css("img[src*='#{@paper.image}']")
           expect(page).to have_content("Price: $#{@item_order_2.price}")
@@ -60,6 +60,35 @@ describe "Merchant can view order show page for only that merchant's items" do
         end
         expect(page).not_to have_css("#merchant-item-order-#{@pencil.id}")
         expect(page).not_to have_content(@pencil.name)
+      end
+
+      it "I can fulfill unfilled orders that have equal or less quantity on hand" do
+        visit "/merchant/orders/#{@ryan_order.id}"
+
+        within "#merchant-item-order-#{@item_order_2.id}" do
+          expect(page).not_to have_link("Fulfill Item")
+        end
+
+        within "#merchant-item-order-#{@item_order_1.id}" do
+          click_on("Fulfill Item")
+        end
+
+        expect(current_path).to eq("/merchant/orders/#{@ryan_order.id}")
+        within "#main-flash" do
+          expect(page).to have_content("Item '#{@tire.name}' has been fulfilled")
+        end
+
+        within "#merchant-item-order-#{@item_order_2.id}" do
+          expect(page).not_to have_link("Fulfill Item")
+        end
+
+        within "#merchant-item-order-#{@item_order_1.id}" do
+          expect(page).not_to have_link("Fulfill Item")
+          expect(page).to have_content("Status: Fulfilled")
+        end
+
+        visit("/items/#{@tire.id}")
+        expect(page).to have_content("Inventory: 9")
       end
     end
   end
