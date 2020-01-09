@@ -48,5 +48,10 @@ describe Order, type: :model do
     it 'user name' do
       expect(@order_1.user_name).to eq(user.name)
     end
+
+    it 'merchant items' do
+      expect(@order_1.merchant_items(@meg.id)).to eq([@tire])
+    end
+
   end
 end
