@@ -17,4 +17,8 @@ class Order <ApplicationRecord
   def user_name
     User.find(user_id).name
   end
+
+  def merchant_items(merchant_id)
+    items.where(merchant_id: merchant_id)
+  end
 end
