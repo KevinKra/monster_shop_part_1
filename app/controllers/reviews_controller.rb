@@ -1,16 +1,15 @@
 class ReviewsController<ApplicationController
 
   def new
-    @item = Item.find(params[:item_id])
+    item
   end
 
   def create
     if field_empty?
-      item = Item.find(params[:item_id])
       flash[:error] = "Please fill in all fields in order to create a review."
       redirect_to "/items/#{item.id}/reviews/new"
     else
-      @item = Item.find(params[:item_id])
+      item
       review = @item.reviews.create(review_params)
       if review.save
         flash[:success] = "Review successfully created"
@@ -23,17 +22,15 @@ class ReviewsController<ApplicationController
   end
 
   def edit
-    @review = Review.find(params[:id])
+    review
   end
 
   def update
-    review = Review.find(params[:id])
     review.update(review_params)
     redirect_to "/items/#{review.item.id}"
   end
 
   def destroy
-    review = Review.find(params[:id])
     item = review.item
     review.destroy
     redirect_to "/items/#{item.id}"
@@ -48,5 +45,13 @@ class ReviewsController<ApplicationController
   def field_empty?
     params = review_params
     params[:title].empty? || params[:content].empty? || params[:rating].empty?
+  end
+
+  def item
+    @item = Item.find(params[:item_id])
+  end
+
+  def review
+    @review = Review.find(params[:id])
   end
 end

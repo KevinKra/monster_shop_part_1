@@ -4,7 +4,7 @@ class OrdersController <ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    order
   end
 
   def index
@@ -14,11 +14,9 @@ class OrdersController <ApplicationController
 
   def update
     if params[:status] == "ship"
-      order = Order.find(params[:id])
       order.update(current_status: 3)
       redirect_to "/admin/dashboard"
     else
-      order = Order.find(params[:id])
       order.update(current_status: 1)
       status_update_unfulfilled(order)
       flash[:notice] = "Your order has been cancelled."
@@ -48,4 +46,9 @@ class OrdersController <ApplicationController
       item_order.update(status: 0)
     end
   end
+
+  def order
+    @order = Order.find(params[:id])
+  end
+
 end

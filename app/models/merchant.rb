@@ -9,6 +9,7 @@ class Merchant <ApplicationRecord
                         :city,
                         :state,
                         :zip
+	validates_inclusion_of :able?, :in => [true, false]
 
 
   def no_orders?
