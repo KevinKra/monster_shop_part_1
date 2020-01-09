@@ -7,7 +7,7 @@ RSpec.describe "admin/merchants#index" do
   before {
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
     @merchant_1, @merchant_2 = create_list(:merchant, 2)
-    @merchant_1.disabled = false
+    create_list(:item, 3, merchant_id: @merchant_1.id) 
     visit "/admin/merchants"
   }
 
@@ -45,6 +45,31 @@ RSpec.describe "admin/merchants#index" do
 
       expect(current_path).to eq("/admin/merchants")
       expect(page).to have_content("#{@merchant_1.name} is now Enabled")
+    end
+
+    it "when an admin disables a merchant, all their associated items are deactivated" do
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Disable"
+      end
+
+      visit "/merchants/#{@merchant_1.id}/items"
+
+      @merchant_1.items.each do |item|
+        expect(item.active?).to eq(false)
+      end
+
+      visit "/admin/merchants"
+
+      within("#merchant-#{@merchant_1.id}") do
+        click_on "Enable"
+      end
+
+      visit "/merchants/#{@merchant_1.id}/items"
+
+      @merchant_1.reload.items.each do |item|
+        expect(item.active?).to eq(true)
+      end
+
     end
   end
 end
