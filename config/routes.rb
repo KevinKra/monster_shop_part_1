@@ -8,7 +8,12 @@ Rails.application.routes.draw do
 
 	namespace :admin do
 		get "/dashboard", to: 'dashboard#show'
-		get "/merchants", to: "merchants#show"
+		get "/merchants", to: 'merchants#index'
+		get "/merchants/:id", to: 'merchants#show'
+		get "/merchants/:id/edit", to: 'merchants#edit'
+		patch "/merchants/:id", to: 'merchants#update'
+		get "/users", to: 'users#index'
+		get "/users/:id", to: 'users#profile'
 	end
 
 	get '/dashboard/items', to: "items#index"
