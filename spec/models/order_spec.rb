@@ -50,5 +50,14 @@ describe Order, type: :model do
     it 'user name' do
       expect(@order_1.user_name).to eq(user.name)
     end
+
+    it 'merchant quantity' do
+      expect(@order_1.merchant_quantity(@meg.id)).to eq(2)
+    end
+
+    it 'merchant grand total' do
+      expect(@order_1.merchant_grand_total(@meg.id)).to eq(200.0)
+    end
+
   end
 end

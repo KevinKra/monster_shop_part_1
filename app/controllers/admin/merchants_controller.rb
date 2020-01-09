@@ -3,6 +3,10 @@ class Admin::MerchantsController < Admin::BaseController
     @merchants = Merchant.all
   end
 
+  def edit
+    @merchant = Merchant.find(params[:id])
+  end
+
   def update
     merchant = Merchant.find(params[:id])
     if merchant.disabled?

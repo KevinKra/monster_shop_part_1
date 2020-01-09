@@ -10,7 +10,7 @@ class ItemsController<ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    item
   end
 
   def new
@@ -29,12 +29,11 @@ class ItemsController<ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    item
   end
 
   def update
-    @item = Item.find(params[:id])
-    @item.update(item_params)
+    item.update(item_params)
     if @item.save
       redirect_to "/items/#{@item.id}"
     else
@@ -44,7 +43,6 @@ class ItemsController<ApplicationController
   end
 
   def destroy
-    item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
     item.destroy
     redirect_to "/items"
@@ -54,5 +52,9 @@ class ItemsController<ApplicationController
 
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
+  end
+
+  def item
+    @item = Item.find(params[:id])
   end
 end

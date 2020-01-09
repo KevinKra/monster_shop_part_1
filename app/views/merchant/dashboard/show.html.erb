@@ -1,0 +1,19 @@
+<section class="user-dashboard">
+  <h2>Merchant Dashboard</h2>
+
+  <h3><%= link_to current_user.merchant.name, "/merchants/#{current_user.merchant.id}" %></h3>
+  <p><%= current_user.merchant.address %></p>
+  <p><%= current_user.merchant.city %>, <%= current_user.merchant.state %> <%= current_user.merchant.zip %></p>
+
+  <h3>View <%= link_to "All Items", merchant_items_path %></h3>
+</section>
+
+<h3>Orders for <%= current_user.merchant.name %></h3>
+<% @orders.each do |order| %>
+  <section id="merchant-orders-index-<%=order.id%>">
+		<%= link_to "ORDER LINK(ID): #{order.id}", "/merchant/orders/#{order.id}"%></br>
+		<p>Created at: <%= order.created_at.strftime("%Y-%m-%d") %></p>
+		<p>Quantity: <%= order.merchant_quantity(current_user.merchant.id) %></p>
+		<p>Total Price: <%= number_to_currency(order.merchant_grand_total(current_user.merchant.id)) %></p>
+  </section>
+<% end %>

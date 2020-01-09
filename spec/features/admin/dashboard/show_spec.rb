@@ -6,8 +6,8 @@ RSpec.describe "As an admin user" do
   let!(:user_2) { create(:user, :default_user) }
 
   before :each do
-    @order = user.orders.create!(name: 'x', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218)
-    @order_2 = user_2.orders.create!(name: 'y', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218)
+    @order = user.orders.create!(name: 'x', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, current_status: 2)
+    @order_2 = user_2.orders.create!(name: 'y', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, current_status: 0)
     mike = Merchant.create!(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     tire = mike.items.create!(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     paper = mike.items.create!(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
@@ -31,7 +31,7 @@ RSpec.describe "As an admin user" do
       expect(current_path).to eq("/admin/dashboard")
     end
 
-    xit 'I see all orders in the system' do
+    it 'I see all orders in the system' do
       # need to add testing for orders
       # Orders are sorted by "status" in this order:
       # - packaged
@@ -52,7 +52,7 @@ RSpec.describe "As an admin user" do
       end
     end
 
-    xit 'I can ship a packaged order' do
+    it 'I can ship a packaged order' do
       within "#admin-order-#{@order.id}" do
         click_on "Ship Order"
       end

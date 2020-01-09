@@ -1,3 +1,6 @@
+Item.destroy_all
+Order.destroy_all
+ItemOrder.destroy_all
 Merchant.destroy_all
 User.destroy_all
 

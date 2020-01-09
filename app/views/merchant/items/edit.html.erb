@@ -1,0 +1,17 @@
+<h1>Merchant Items Edit View</h1>
+
+<section id="merchant-add-item-form">
+  <%= form_for @item, url: merchant_item_path(@item) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+    <%= f.label :image, "Thumbnail Image URL" %>
+    <%= f.text_field :image %>
+    <%= f.label :inventory, "Current Inventory" %>
+    <%= f.text_field :inventory %>
+    <%= f.submit %>
+  <% end %>
+</section>

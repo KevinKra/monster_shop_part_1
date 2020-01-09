@@ -40,7 +40,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
       }
       it 'they can sign in' do
-        expect(current_path).to eq("/merchants/dashboard")
+        expect(current_path).to eq("/merchant/dashboard")
       end
 
       it 'they see a welcome flash message' do
@@ -126,7 +126,7 @@ RSpec.describe 'User logging in' do
         click_on "Sign In"
 
         visit "/login"
-        expect(current_path).to eq("/merchants/dashboard")
+        expect(current_path).to eq("/merchant/dashboard")
       end
 
       it 'if an user, back to their user dashboard' do

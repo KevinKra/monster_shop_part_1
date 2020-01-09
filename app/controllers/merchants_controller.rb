@@ -5,7 +5,7 @@ class MerchantsController <ApplicationController
   end
 
   def show
-    @merchant = Merchant.find(params[:id])
+    merchant
   end
 
   def new
@@ -22,12 +22,11 @@ class MerchantsController <ApplicationController
   end
 
   def edit
-    @merchant = Merchant.find(params[:id])
+    merchant
   end
 
   def update
-    @merchant = Merchant.find(params[:id])
-    @merchant.update(merchant_params)
+    merchant.update(merchant_params)
     if @merchant.save
       redirect_to "/merchants/#{@merchant.id}"
     else
@@ -45,6 +44,10 @@ class MerchantsController <ApplicationController
 
   def merchant_params
     params.permit(:name,:address,:city,:state,:zip)
+  end
+
+  def merchant
+    @merchant = Merchant.find(params[:id])
   end
 
 end
