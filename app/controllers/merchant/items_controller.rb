@@ -21,11 +21,11 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    item
   end
 
   def update
-    @item = Item.find(params[:id])
+    item #helper method at the bottom, needs this here to function, could set to a variable if we want.
     if params[:item]
       update_item_info
     else
@@ -35,7 +35,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def destroy
-    item = Item.find(params[:id])
+    item = Item.find(params[:id]) #the helper method does not work here and I do not know why
     item.destroy
     flash[:notice] = "Item '#{item.name}' has been deleted.'"
     redirect_to "/merchant/items"
@@ -45,10 +45,6 @@ class Merchant::ItemsController < ApplicationController
 
   def require_merchant_access
     render file: "/public/404" unless current_merchant?
-  end
-
-  def item_params
-    params.require(:item).permit(:name, :description, :price, :image, :inventory)
   end
 
   def update_item_info
@@ -71,4 +67,15 @@ class Merchant::ItemsController < ApplicationController
       flash[:notice] = "Item '#{@item.name}' is now for sale."
     end
   end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:name, :description, :price, :image, :inventory)   #moved into private
+  end
+
+  def item
+    @item = Item.find(params[:id])
+  end
+
 end
