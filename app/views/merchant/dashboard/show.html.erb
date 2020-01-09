@@ -13,7 +13,7 @@
   <section id="merchant-orders-index-<%=order.id%>">
 		<%= link_to "ORDER LINK(ID): #{order.id}", "/merchant/orders/#{order.id}"%></br>
 		<p>Created at: <%= order.created_at.strftime("%Y-%m-%d") %></p>
-		<p>Quantity: <%=  %>
-		<p>Grand Total: <%=  %>
+		<p>Quantity: <%= order.merchant_quantity(current_user.merchant.id) %></p>
+		<p>Total Price: <%= number_to_currency(order.merchant_grand_total(current_user.merchant.id)) %></p>
   </section>
 <% end %>
