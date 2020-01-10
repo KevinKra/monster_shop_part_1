@@ -55,14 +55,14 @@ RSpec.describe "As a merchant user" do
 
     within "#merchant-orders-index-#{ryan_order.id}" do
       expect(page).to have_link("ORDER LINK(ID): #{ryan_order.id}")
-      expect(page).to have_content("Created at: 2020-01-09")
+      expect(page).to have_content("Created at: #{ryan_order.created_at.strftime("%Y-%m-%d")}")
       expect(page).to have_content("Quantity: 4")
       expect(page).to have_content("Total Price: $320.00")
     end
 
     within "#merchant-orders-index-#{carley_order.id}" do
       expect(page).to have_link("ORDER LINK(ID): #{carley_order.id}")
-      expect(page).to have_content("Created at: 2020-01-09")
+      expect(page).to have_content("Created at: #{carley_order.created_at.strftime("%Y-%m-%d")}")
       expect(page).to have_content("Quantity: 1")
       expect(page).to have_content("Total Price: $100.00")
     end
