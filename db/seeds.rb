@@ -1,46 +1,40 @@
-Item.destroy_all
-Order.destroy_all
-ItemOrder.destroy_all
-Merchant.destroy_all
-User.destroy_all
-
 # users
 user_1 = User.create(
-  name:  Faker::Name.first_name,
-  street_address: Faker::Address.street_address,
-  city: Faker::Address.city,
-  state: Faker::Address.state,
-  zip: Faker::Address.zip,
+  name: "User Alex",
+  street_address: "91 Street",
+  city: "Golden",
+  state: "Colorado",
+  zip: "1234",
   email: "user1@gmail.com",
   password: "user",
   role: 0
 )
 user_2 = User.create(
-  name:  Faker::Name.first_name,
-  street_address: Faker::Address.street_address,
-  city: Faker::Address.city,
-  state: Faker::Address.state,
-  zip: Faker::Address.zip,
+  name: "User Sebastian",
+  street_address: "102 Blv",
+  city: "Peoria",
+  state: "Texas",
+  zip: "91022",
   email: "user2@gmail.com",
   password: "user",
   role: 0
 )
 admin = User.create(
-    name:  Faker::Name.first_name,
-    street_address: Faker::Address.street_address,
-    city: Faker::Address.city,
-    state: Faker::Address.state,
-    zip: Faker::Address.zip,
+    name: "Admin Kevin",
+    street_address: "22 Fake",
+    city: "Arvada",
+    state: "Colorado",
+    zip: "20032",
     email: "admin@gmail.com",
     password: "admin",
     role: 1
 )
-merchant = User.create(
-    name:  Faker::Name.first_name,
-    street_address: Faker::Address.street_address,
-    city: Faker::Address.city,
-    state: Faker::Address.state,
-    zip: Faker::Address.zip,
+merchant = User.create!(
+    name: "Merchant Ryan",
+    street_address: "123",
+    city: "Denver",
+    state: "Colorado",
+    zip: "80204",
     email: "merchant@gmail.com",
     password: "merchant",
     role: 2

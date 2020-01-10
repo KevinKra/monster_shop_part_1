@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20200108211514) do
     t.integer "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "disabled", default: false
     t.boolean "able?", default: true
+    t.boolean "disabled", default: false
   end
 
   create_table "orders", force: :cascade do |t|
