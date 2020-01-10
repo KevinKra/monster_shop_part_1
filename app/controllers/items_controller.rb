@@ -13,47 +13,8 @@ class ItemsController<ApplicationController
     item
   end
 
-  def new
-    @merchant = Merchant.find(params[:merchant_id])
-  end
-
-  def create
-    @merchant = Merchant.find(params[:merchant_id])
-    item = @merchant.items.create(item_params)
-    if item.save
-      redirect_to "/merchants/#{@merchant.id}/items"
-    else
-      flash[:error] = item.errors.full_messages.to_sentence
-      render :new
-    end
-  end
-
-  def edit
-    item
-  end
-
-  def update
-    item.update(item_params)
-    if @item.save
-      redirect_to "/items/#{@item.id}"
-    else
-      flash[:error] = @item.errors.full_messages.to_sentence
-      render :edit
-    end
-  end
-
-  def destroy
-    Review.where(item_id: item.id).destroy_all
-    item.destroy
-    redirect_to "/items"
-  end
-
   private
-
-  def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
-  end
-
+  
   def item
     @item = Item.find(params[:id])
   end
