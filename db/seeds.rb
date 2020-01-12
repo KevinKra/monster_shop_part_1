@@ -45,6 +45,14 @@ bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', ci
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210, disabled: true)
 poop_shop = Merchant.create(name: "Brian's poop Shop", address: '125 poopgo St.', city: 'Denver', state: 'CO', zip: 80210, disabled: false)
 
+coupon_1 = Coupon.create(
+  name: "Christmas Special",
+  code: "5ERWTTU",
+  active: true,
+  discount: 15,
+  merchant: bike_shop
+)
+
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins-1", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
 tire_2 = bike_shop.items.create!(name: "Gatorskins-2", description: "I am number 2", price: 200, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 13)
@@ -62,7 +70,7 @@ pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
 #orders
-order_1 = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_1.id)
+order_1 = Order.create!(name: "Stans's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_1.id, coupon: coupon_1)
 order_2 = Order.create!(name: "Ryan's Order", address: "123", city: "pekin", state: "illinois", zip: "61554", user_id: user_2.id)
 
 #itemorders
