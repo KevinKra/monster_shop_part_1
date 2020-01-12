@@ -8,6 +8,10 @@
   <h3>View <%= link_to "All Items", merchant_items_path %></h3>
 </section>
 
+<section>
+  <%= link_to 'View Coupons', "/merchant/coupons" %>
+</section>
+
 <h3>Orders for <%= current_user.merchant.name %></h3>
 <% @orders.each do |order| %>
   <section id="merchant-orders-index-<%=order.id%>">
