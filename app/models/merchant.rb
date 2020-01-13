@@ -4,6 +4,7 @@ class Merchant <ApplicationRecord
 	has_many :users
 
   has_many :orders, through: :item_orders
+  has_many :coupons
 
 
   validates_presence_of :name,
