@@ -18,11 +18,14 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def destroy
-    coupon = Coupon.find_by(id: params[:id]).destroy
-    if coupon
+    coupon = Coupon.find_by(id: params[:id])
+    if coupon.not_in_use?
       coupon.destroy
       redirect_to "/merchant/coupons"
       flash[:success] = "Coupon successfully deleted"
+    elsif !coupon.not_in_use? 
+      redirect_to "/merchant/coupons/#{params[:id]}"
+      flash[:failure] = "Coupon is currently being used in an order"
     else
       redirect_to "/merchant/coupons/#{params[:id]}"
       flash[:failure] = "Coupon could not be found"

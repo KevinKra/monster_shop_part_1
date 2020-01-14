@@ -42,18 +42,6 @@ RSpec.describe "merchant/coupons #index" do
 
   end
 
-  context "Coupon deletion" do
-    it "merchant user is able to delete coupon" do
-      expect(@merchant_user.merchant.coupons.count).to eq(1)
-      within("#coupon-#{@coupon_1.id}") do
-        click_on "delete"
-      end
-      expect(current_path).to eq("/merchant/coupons")
-      expect(page).to have_content("Coupon successfully deleted")
-      expect(@merchant_user.merchant.coupons.count).to eq(0)
-    end
-  end
-
   context "Coupon creation" do
     it "merchant user is redirected to the coupon#new page" do
       within(".coupon-creation") do

@@ -4,7 +4,7 @@ class Merchant <ApplicationRecord
 	has_many :users
 
   has_many :orders, through: :item_orders
-  has_many :coupons
+  has_many :coupons, dependent: :destroy
 
 
   validates_presence_of :name,
@@ -30,4 +30,6 @@ class Merchant <ApplicationRecord
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
   end
+
+
 end
