@@ -1,11 +1,13 @@
 <h4>Merchant Coupons Index</h4>
-
+<section class="coupon-creation">
+  <%= link_to 'Create a Coupon', "/merchant/coupons/new" %>
+</section>
 <% @coupons.each do |coupon| %>
   <article class="coupon-card" id="coupon-<%=coupon.id%>">
     <h4><%=coupon.name%></h4>
     <p>code: <%=coupon.code%></p>
     <p>active: <%=coupon.active%></p>
     <p>discount: <%=coupon.discount%></p>
-    <%= link_to 'delete', "merchant/coupons/:id" %>
+    <%= link_to 'delete', "/merchant/coupons/#{coupon.id}", method: :delete %>
   </article>
 <% end %>
