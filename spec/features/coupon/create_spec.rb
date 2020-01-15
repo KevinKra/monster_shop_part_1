@@ -38,7 +38,6 @@ RSpec.describe "Coupons#create" do
       discount: 25,
       merchant: @bike_shop
     )
-
     @order_1 = Order.create!(
       name: 'Meg', 
       address: '123 Stang Ave',

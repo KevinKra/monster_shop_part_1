@@ -21,6 +21,18 @@ class Item <ApplicationRecord
     reviews.order(rating: order).limit(limit)
   end
 
+  def coupon_check(coupon_id)
+    merchant = Merchant.where(id: merchant_id)[0]
+    coupon = merchant.coupons.where(id: coupon_id)[0]
+    if coupon
+      savings = price * ( coupon.discount.to_f / 100 )
+      total = price - savings
+      total.to_i
+    else
+      price
+    end
+  end
+
   def no_orders?
     item_orders.empty?
   end
