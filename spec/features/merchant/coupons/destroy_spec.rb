@@ -1,6 +1,6 @@
 require 'rails_helper';
 
-RSpec.describe "merchant/coupons #index" do
+RSpec.describe "merchant/coupons #destroy" do
   before {
     @bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @tire = @bike_shop.items.create!(name: "Gatorskins", description: "They'll never pop!",
