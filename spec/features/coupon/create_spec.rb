@@ -63,7 +63,7 @@ RSpec.describe "Coupons#create" do
         fill_in :coupon_code, with: "533E21"
         click_on "Add Coupon"
       end
-      expect(page).to have_content("Coupon Added. Checkout or continue shopping")
+      expect(page).to have_content("Coupon #{@coupon_1.code} Added. Checkout or continue shopping")
       expect(current_path).to eq("/cart")
     end
   end
