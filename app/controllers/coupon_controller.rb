@@ -3,7 +3,7 @@ class CouponController < ApplicationController
     coupon = Coupon.find_by(code: params[:coupon_code])
     if coupon
       redirect_to "/cart"
-      session[:coupon_code]
+      session[:coupon_id] = coupon.id
       flash[:success] = "Coupon Added. Checkout or continue shopping."
     else
       redirect_to "/cart"
