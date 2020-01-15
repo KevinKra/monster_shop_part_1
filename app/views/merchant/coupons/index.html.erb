@@ -9,5 +9,6 @@
     <p>active: <%=coupon.active%></p>
     <p>discount: <%=coupon.discount%></p>
     <%= link_to 'delete', "/merchant/coupons/#{coupon.id}", method: :delete %>
+    <%= link_to 'edit', "/merchant/coupons/#{coupon.id}/edit", method: :patch %>
   </article>
 <% end %>

@@ -71,7 +71,7 @@ Rails.application.routes.draw do
 		get "/dashboard", to: 'dashboard#show'
 		resources :orders, only: [:show]
     resources :item_orders, only: [:update]
-    resources :coupons, only: [:index, :new, :create, :destroy]
+    resources :coupons, except: [:show]
 	end
 
   get '/welcome/home', to: 'welcome#index'

@@ -17,6 +17,15 @@ class Merchant::CouponsController < Merchant::BaseController
     end
   end
 
+  def edit
+    # permission denied???
+    coupon = Coupon.find_by(id: params[:id])
+  end
+
+  def update
+
+  end
+
   def destroy
     coupon = Coupon.find_by(id: params[:id])
     if coupon.not_in_use?
