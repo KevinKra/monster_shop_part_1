@@ -61,13 +61,17 @@ Rails.application.routes.draw do
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+  # coupons
+  post '/coupon', to: 'coupon#create'
+
 
 	namespace :merchant do
 		post '/items/new', to: 'items#create'
 		resources :items, only: [:index, :update, :destroy, :new, :edit]
 		get "/dashboard", to: 'dashboard#show'
 		resources :orders, only: [:show]
-		resources :item_orders, only: [:update]
+    resources :item_orders, only: [:update]
+    resources :coupons, except: [:show]
 	end
 
   get '/welcome/home', to: 'welcome#index'

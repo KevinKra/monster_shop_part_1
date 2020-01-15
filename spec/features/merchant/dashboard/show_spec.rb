@@ -16,12 +16,18 @@ RSpec.describe "As a merchant user" do
     it 'it should display content relevant to my role' do
       expect(page).to have_content("Merchant Dashboard")
     end
+    
     it 'it should display my companies name and full address' do
       expect(page).to have_content("#{@merchant_company.name}")
       expect(page).to have_content("#{@merchant_company.address}")
       expect(page).to have_content("#{@merchant_company.city}")
       expect(page).to have_content("#{@merchant_company.state}")
       expect(page).to have_content("#{@merchant_company.zip}")
+    end
+
+    it "should have a link to the merchant's coupon page" do
+      click_on "View Coupons"
+      expect(current_path).to eq("/merchant/coupons")
     end
   end
 

@@ -1,0 +1,12 @@
+<h4>Create New Coupon</h4>
+<%= form_tag "/merchant/coupons", class: "create-coupon-form" do %>
+  <%= label_tag :name %>
+  <%= text_field_tag :name %>
+  <%= label_tag :code %>
+  <%= text_field_tag :code %>
+  <%= label_tag :discount %>
+  <%= number_field_tag :discount %>
+  <%= label_tag :active %>
+  <%= text_field_tag :active %>
+  <%= submit_tag "Create New Coupon" %>
+<% end %>
