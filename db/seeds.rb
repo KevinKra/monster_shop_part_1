@@ -47,9 +47,9 @@ poop_shop = Merchant.create(name: "Brian's poop Shop", address: '125 poopgo St.'
 
 coupon_1 = Coupon.create(
   name: "Christmas Special",
-  code: "5ERWTTU",
+  code: "33OFF",
   active: true,
-  discount: 15,
+  discount: 33,
   merchant: bike_shop
 )
 
