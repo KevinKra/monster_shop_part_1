@@ -3,29 +3,29 @@ Rails.application.routes.draw do
 	get "/", to: "welcome#index"
 
 	namespace :admin do
+    resources :merchants, only: [:show, :edit, :update]
     get "/dashboard", to: 'dashboard#show'
     get "/merchants", to: 'merchants#index'
-    get "/merchants/:id", to: 'merchants#show'
-    get "/merchants/:id/edit", to: 'merchants#edit'
-    patch "/merchants/:id", to: 'merchants#update'
     get "/users", to: 'users#index'
     get "/users/:id", to: 'users#profile'
+    # get "/merchants/:id", to: 'merchants#show'
+    # get "/merchants/:id/edit", to: 'merchants#edit'
+    # patch "/merchants/:id", to: 'merchants#update'
   end
 
-	get '/dashboard/items', to: "items#index"
 
+  get '/dashboard/items', to: "items#index"
+
+  resources :reviews, only: [:edit, :update, :destroy]
+  
 	resources :merchants
-
-	resources :items, only: [:index, :show, :edit, :update, :destroy]
-
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
 
+	resources :items, only: [:index, :show, :edit, :update, :destroy]
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
-
-	resources :reviews, only: [:edit, :update, :destroy]
 
   # cart
   get "/cart", to: "cart#show"
@@ -48,8 +48,8 @@ Rails.application.routes.draw do
   post "/register", to: 'users#create'
 
   # user
-  get "/users", to: 'users#index'
-	resources :users, only: [:edit, :update]
+  # get "/users", to: 'users#index'
+	resources :users, only: [:index, :edit, :update]
   get "/profile", to: 'users#show'
 
   # user - password
@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   patch "/profile", to: 'users#update_password'
 
   # sessions
+  # resources :sessions, only: [:new, :create], as: 'login'
 	get '/login', to: 'sessions#new'
 	post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
